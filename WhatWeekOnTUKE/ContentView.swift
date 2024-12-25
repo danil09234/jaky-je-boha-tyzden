@@ -27,13 +27,42 @@ extension Color {
     }
 }
 
+func calculateSemesterStart(for referenceDate: Date) -> Date {
+    let calendar = Calendar.current
+    let referenceYear = calendar.component(.year, from: referenceDate)
+    
+    func firstMonday(after year: Int, month: Int, day: Int) -> Date {
+        let initialDate = calendar.date(from: DateComponents(year: year, month: month, day: day))!
+        let weekday = calendar.component(.weekday, from: initialDate)
+        let offset = (2 - weekday + 7) % 7
+        return calendar.date(byAdding: .day, value: offset, to: initialDate)!
+    }
+    
+    let winterStartCurrentYear = firstMonday(after: referenceYear, month: 9,  day: 20)
+    let summerStartCurrentYear = firstMonday(after: referenceYear, month: 2,  day: 10)
+    let winterStartNextYear    = firstMonday(after: referenceYear + 1, month: 9,  day: 20)
+    
+    if referenceDate >= summerStartCurrentYear && referenceDate < winterStartCurrentYear {
+        return summerStartCurrentYear
+    } else if referenceDate >= winterStartCurrentYear {
+        return winterStartCurrentYear
+    } else {
+        return firstMonday(after: referenceYear - 1, month: 9, day: 20)
+    }
+}
+
 struct ContentView: View {
+    private let referenceDate: Date
     private var semesterStart: Date {
-        calculateSemesterStart()
+        calculateSemesterStart(for: referenceDate)
     }
     
     @State private var currentWeek: Int?
     @State private var displayText: String = ""
+
+    init(referenceDate: Date = Date()) {
+        self.referenceDate = referenceDate
+    }
 
     var body: some View {
         VStack {
@@ -49,7 +78,7 @@ struct ContentView: View {
     }
 
     private func updateWeek() {
-        let now = Calendar.current.startOfDay(for: Date())
+        let now = Calendar.current.startOfDay(for: referenceDate)
         if now >= semesterStart {
             let daysDifference = Calendar.current.dateComponents([.day], from: semesterStart, to: now).day ?? 0
             let weekOffset = [0, 5, 6].contains(Calendar.current.component(.weekday, from: now)) ? 0 : 1
@@ -62,18 +91,6 @@ struct ContentView: View {
             formatter.dateStyle = .medium
             displayText = "Vidíme sa \(formatter.string(from: semesterStart))!"
         }
-    }
-
-    private func calculateSemesterStart() -> Date {
-        let now = Date()
-        let calendar = Calendar.current
-        
-        let year = calendar.component(.month, from: now) < 9 ? calendar.component(.year, from: now) - 1 : calendar.component(.year, from: now)
-        
-        let components = DateComponents(year: year, month: 9, day: 20)
-        let initialDate = calendar.date(from: components)!
-        
-        return calendar.nextDate(after: initialDate, matching: DateComponents(weekday: 2), matchingPolicy: .nextTime)!
     }
 }
 
