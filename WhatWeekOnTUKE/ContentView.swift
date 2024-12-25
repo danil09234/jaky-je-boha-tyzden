@@ -126,7 +126,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text(displayText)
-                .font(.custom("Roboto-Bold", size: currentWeek != nil ? 280 : 50))
+                .font(.custom("Roboto-Bold", size: currentWeek != nil ? 280 : 24))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
                 .padding()
@@ -150,13 +150,13 @@ struct ContentView: View {
             formatter.locale = Locale(identifier: "sk")
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateStyle = .medium
-            displayText = "Veselé sviatky a veľa šťastia pri príprave na skúšky! Prestávka do \(formatter.string(from: endOfBreak)). Skúškové začínajú \(formatter.string(from: examPeriodStart))."
+            displayText = "Veselé sviatky a veľa šťastia pri príprave na skúšky! \nPrestávka do \(formatter.string(from: endOfBreak)). \nSkúškové začínajú \(formatter.string(from: examPeriodStart))."
         } catch SemesterError.examPeriodActive(let endOfExams) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateStyle = .medium
-            displayText = "Veľa šťastia na skúškach! Skúškové končia \(formatter.string(from: endOfExams))"
+            displayText = "Veľa šťastia na skúškach! \nSkúškové končia \(formatter.string(from: endOfExams))"
         } catch SemesterError.notInSemester(let nextSemesterStart) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
