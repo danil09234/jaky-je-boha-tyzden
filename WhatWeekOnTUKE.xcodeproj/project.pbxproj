@@ -21,6 +21,7 @@
 		FA7ECB0C2D1C58C400C23B32 /* WearableWhatWeekOnTUKE_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7ECB0B2D1C58C400C23B32 /* WearableWhatWeekOnTUKE_Watch_AppUITestsLaunchTests.swift */; };
 		FA7ECB0F2D1C58C400C23B32 /* WearableWhatWeekOnTUKE Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FA7ECAEC2D1C58C200C23B32 /* WearableWhatWeekOnTUKE Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA7ECB5E2D1C69EF00C23B32 /* TUKESchedule in Frameworks */ = {isa = PBXBuildFile; productRef = FA7ECB5D2D1C69EF00C23B32 /* TUKESchedule */; };
+		FA95E1D82D1C736A00B861F2 /* TUKESchedule in Frameworks */ = {isa = PBXBuildFile; productRef = FA95E1D72D1C736A00B861F2 /* TUKESchedule */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA95E1D82D1C736A00B861F2 /* TUKESchedule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,8 +255,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				FA95E1DA2D1C738300B861F2 /* PBXTargetDependency */,
 			);
 			name = "WearableWhatWeekOnTUKE Watch App";
+			packageProductDependencies = (
+				FA95E1D72D1C736A00B861F2 /* TUKESchedule */,
+			);
 			productName = "WearableWhatWeekOnTUKE Watch App";
 			productReference = FA7ECAEC2D1C58C200C23B32 /* WearableWhatWeekOnTUKE Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -435,6 +441,10 @@
 		FA7ECB602D1C69F900C23B32 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = FA7ECB5F2D1C69F900C23B32 /* TUKESchedule */;
+		};
+		FA95E1DA2D1C738300B861F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = FA95E1D92D1C738300B861F2 /* TUKESchedule */;
 		};
 /* End PBXTargetDependency section */
 
@@ -843,6 +853,14 @@
 			productName = TUKESchedule;
 		};
 		FA7ECB5F2D1C69F900C23B32 /* TUKESchedule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TUKESchedule;
+		};
+		FA95E1D72D1C736A00B861F2 /* TUKESchedule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TUKESchedule;
+		};
+		FA95E1D92D1C738300B861F2 /* TUKESchedule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TUKESchedule;
 		};

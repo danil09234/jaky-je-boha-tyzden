@@ -68,13 +68,13 @@ struct ContentView: View {
             formatter.locale = Locale(identifier: "sk")
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateStyle = .medium
-            displayText = "Veselé sviatky a veľa šťastia pri príprave na skúšky! \nPrestávka do \(formatter.string(from: endOfBreak)). \nSkúškové začínajú \(formatter.string(from: examPeriodStart))."
+            displayText = "Veselé sviatky a veľa šťastia pri príprave na skúšky! \nPrestávka do \(formatter.string(from: endOfBreak)). \nSkúšky sa začínajú \(formatter.string(from: examPeriodStart))."
         } catch SemesterError.examPeriodActive(let endOfExams) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateStyle = .medium
-            displayText = "Veľa šťastia na skúškach! \nSkúškové končia \(formatter.string(from: endOfExams))"
+            displayText = "Veľa šťastia na skúškach! \nSkúšky sa končia \(formatter.string(from: endOfExams))"
         } catch SemesterError.notInSemester(let nextSemesterStart) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
