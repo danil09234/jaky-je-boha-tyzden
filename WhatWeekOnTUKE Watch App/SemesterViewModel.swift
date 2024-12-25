@@ -1,7 +1,6 @@
 import Foundation
 import Combine
-import TUKESchedule
-import ContentUpdater
+import AppCore
 
 class SemesterViewModel: ObservableObject {
     @Published var displayText: String = ""

@@ -1,5 +1,5 @@
 import XCTest
-@testable import ContentUpdater
+@testable import AppCore
 
 class MockClock: Clock {
     var currentDate: Date

@@ -1,6 +1,5 @@
 import SwiftUI
-import TUKESchedule
-import ContentUpdater
+import AppCore
 
 extension Color {
     init(hex: String) {

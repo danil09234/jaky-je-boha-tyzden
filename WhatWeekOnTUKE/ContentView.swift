@@ -1,5 +1,5 @@
 import SwiftUI
-import TUKESchedule
+import AppCore
 
 extension Color {
     init(hex: String) {

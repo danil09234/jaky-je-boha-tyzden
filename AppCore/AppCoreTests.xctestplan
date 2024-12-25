@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "0C66680A-1357-442C-9890-D460ED9AAFA0",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "AppCoreTests",
+        "name" : "AppCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}
