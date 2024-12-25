@@ -1,10 +1,5 @@
 import SwiftUI
-
-enum SemesterError: Error {
-    case notInSemester(nextSemesterStart: Date)
-    case examPeriodActive(endOfExams: Date)
-    case winterBreakActive(endOfBreak: Date, examPeriodStart: Date)
-}
+import TUKESchedule
 
 extension Color {
     init(hex: String) {
@@ -33,87 +28,6 @@ extension Color {
     }
 }
 
-private let calendar: Calendar = {
-    var cal = Calendar.current
-    cal.timeZone = TimeZone(secondsFromGMT: 0)!
-    return cal
-}()
-
-private func dateYMD(_ year: Int, _ month: Int, _ day: Int) -> Date {
-    calendar.date(from: DateComponents(year: year, month: month, day: day))!
-}
-
-func firstMonday(after year: Int, month: Int, day: Int) -> Date {
-    let initial = dateYMD(year, month, day)
-    let weekday = calendar.component(.weekday, from: initial)
-    let offset = (2 - weekday + 7) % 7
-    return calendar.date(byAdding: .day, value: offset, to: initial)!
-}
-
-func nextSemesterStart(after date: Date) -> Date {
-    let y = calendar.component(.year, from: date)
-    return firstMonday(after: y, month: 9, day: 20)
-}
-
-func calculateSemesterStart(for referenceDate: Date) throws -> Date {
-
-    // 1) Identify boundaries of the “current academic year”
-    let year = calendar.component(.year, from: referenceDate)
-    let winterSemesterStart = firstMonday(after: year, month: 9, day: 20)  // e.g. 9/20 -> first Monday
-    let summerSemesterStart = firstMonday(after: year, month: 2, day: 10) // e.g. 2/10 -> first Monday
-
-    // 2) Winter break: 14th week starts on Monday after 13 weeks
-    let winterBreakStart = calendar.date(byAdding: .weekOfYear, value: 13, to: winterSemesterStart)!
-    let winterBreakEnd = dateYMD(year, 12, 31)
-
-    // 3) Winter exam period: from Jan 1 to day before summer semester
-    let examPeriodStart = dateYMD(year, 1, 1)
-    let dayBeforeSummerStart = calendar.date(byAdding: .day, value: -1, to: summerSemesterStart)!
-
-    // 4) Summer break: June 1 to August 31
-    let juneStart = dateYMD(year, 6, 1)
-    let augEnd    = dateYMD(year, 8, 31)
-    
-    // 5) Early September: Sept 1 until winterSemesterStart
-    let septStart = dateYMD(year, 9, 1)
-    
-    // -- Check for winter break
-    if referenceDate >= winterBreakStart && referenceDate <= winterBreakEnd {
-        let examPeriodStart = Calendar.current.date(byAdding: .day, value: 1, to: winterBreakEnd)!
-        throw SemesterError.winterBreakActive(endOfBreak: winterBreakEnd, examPeriodStart: examPeriodStart)
-    }
-
-    // -- Check for winter exam period
-    if referenceDate >= examPeriodStart && referenceDate <= dayBeforeSummerStart {
-        throw SemesterError.examPeriodActive(endOfExams: dayBeforeSummerStart)
-    }
-
-    // -- Check for summer break or early September or before summer semester
-    if (referenceDate >= juneStart && referenceDate <= augEnd)
-        || (referenceDate >= septStart && referenceDate < winterSemesterStart)
-        || (referenceDate < summerSemesterStart) {
-        throw SemesterError.notInSemester(nextSemesterStart: nextSemesterStart(after: referenceDate))
-    }
-
-    // 6) If not in break/exams, we are presumably in a semester.
-    //    Decide if it’s summer or winter, based on referenceDate.
-    //    - If referenceDate >= summerSemesterStart and < winterSemesterStart => summer
-    //    - If referenceDate >= winterSemesterStart => winter
-    //    - Else => must be the winter from previous year
-    if referenceDate >= summerSemesterStart && referenceDate < winterSemesterStart {
-        return summerSemesterStart
-    } else if referenceDate >= winterSemesterStart {
-        return winterSemesterStart
-    } else {
-        // Must be the previous winter
-        return firstMonday(after: year - 1, month: 9, day: 20)
-    }
-}
-
-private func firstMondayAfterNewYear(year: Int) -> Date {
-    return firstMonday(after: year, month: 1, day: 1)
-}
-
 struct ContentView: View {
     private let referenceDate: Date
     @State private var currentWeek: Int?
@@ -137,11 +51,15 @@ struct ContentView: View {
     }
 
     private func updateWeek() {
-        let now = calendar.startOfDay(for: referenceDate)
+        let now = TUKESchedule.dateYMD(
+            Calendar.current.component(.year, from: referenceDate),
+            Calendar.current.component(.month, from: referenceDate),
+            Calendar.current.component(.day, from: referenceDate)
+        )
         do {
-            let semesterStart = try calculateSemesterStart(for: now)
-            let daysDifference = calendar.dateComponents([.day], from: semesterStart, to: now).day ?? 0
-            let weekday = calendar.component(.weekday, from: now)
+            let semesterStart = try TUKESchedule.calculateSemesterStart(for: now)
+            let daysDifference = Calendar.current.dateComponents([.day], from: semesterStart, to: now).day ?? 0
+            let weekday = Calendar.current.component(.weekday, from: now)
             let weekOffset = [0, 5, 6].contains(weekday) ? 0 : 1
             currentWeek = (daysDifference / 7) + weekOffset
             displayText = "\(currentWeek ?? 0)"
