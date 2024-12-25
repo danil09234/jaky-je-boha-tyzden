@@ -11,6 +11,7 @@
 		FA7ECA9C2D1B6F2800C23B32 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7ECA9B2D1B6F2800C23B32 /* ContentView.swift */; };
 		FA7ECA9E2D1B6F2900C23B32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA7ECA9D2D1B6F2900C23B32 /* Assets.xcassets */; };
 		FA7ECAA22D1B6F2900C23B32 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA7ECAA12D1B6F2900C23B32 /* Preview Assets.xcassets */; };
+		FA7ECAA92D1B729F00C23B32 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA7ECAA82D1B729F00C23B32 /* Roboto-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,8 @@
 		FA7ECA9D2D1B6F2900C23B32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA7ECA9F2D1B6F2900C23B32 /* WhatWeekOnTUKE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhatWeekOnTUKE.entitlements; sourceTree = "<group>"; };
 		FA7ECAA12D1B6F2900C23B32 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FA7ECAA82D1B729F00C23B32 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "../../../../../Downloads/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		FA7ECAAC2D1B7A8200C23B32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +55,8 @@
 		FA7ECA982D1B6F2800C23B32 /* WhatWeekOnTUKE */ = {
 			isa = PBXGroup;
 			children = (
+				FA7ECAAC2D1B7A8200C23B32 /* Info.plist */,
+				FA7ECAA82D1B729F00C23B32 /* Roboto-Bold.ttf */,
 				FA7ECA992D1B6F2800C23B32 /* WhatWeekOnTUKEApp.swift */,
 				FA7ECA9B2D1B6F2800C23B32 /* ContentView.swift */,
 				FA7ECA9D2D1B6F2900C23B32 /* Assets.xcassets */,
@@ -129,6 +134,7 @@
 			files = (
 				FA7ECAA22D1B6F2900C23B32 /* Preview Assets.xcassets in Resources */,
 				FA7ECA9E2D1B6F2900C23B32 /* Assets.xcassets in Resources */,
+				FA7ECAA92D1B729F00C23B32 /* Roboto-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +280,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhatWeekOnTUKE/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -312,6 +319,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhatWeekOnTUKE/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
