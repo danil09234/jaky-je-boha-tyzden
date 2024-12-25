@@ -49,8 +49,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA7ECB042D1C58C300C23B32"
-               BuildableName = "WearableWhatWeekOnTUKE Watch AppUITests.xctest"
-               BlueprintName = "WearableWhatWeekOnTUKE Watch AppUITests"
+               BuildableName = "WhatWeekOnTUKE Watch AppUITests.xctest"
+               BlueprintName = "WhatWeekOnTUKE Watch AppUITests"
                ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -60,8 +60,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA7ECAFA2D1C58C300C23B32"
-               BuildableName = "WearableWhatWeekOnTUKE Watch AppTests.xctest"
-               BlueprintName = "WearableWhatWeekOnTUKE Watch AppTests"
+               BuildableName = "WhatWeekOnTUKE Watch AppTests.xctest"
+               BlueprintName = "WhatWeekOnTUKE Watch AppTests"
                ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
             </BuildableReference>
          </TestableReference>
