@@ -1,5 +1,11 @@
 import SwiftUI
 
+enum SemesterError: Error {
+    case notInSemester(nextSemesterStart: Date)
+    case examPeriodActive(endOfExams: Date)
+    case winterBreakActive(endOfBreak: Date)
+}
+
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -27,43 +33,95 @@ extension Color {
     }
 }
 
-func calculateSemesterStart(for referenceDate: Date) -> Date {
-    let calendar = Calendar.current
-    let referenceYear = calendar.component(.year, from: referenceDate)
+private let calendar: Calendar = {
+    var cal = Calendar.current
+    cal.timeZone = TimeZone(secondsFromGMT: 0)!
+    return cal
+}()
+
+private func dateYMD(_ year: Int, _ month: Int, _ day: Int) -> Date {
+    calendar.date(from: DateComponents(year: year, month: month, day: day))!
+}
+
+func firstMonday(after year: Int, month: Int, day: Int) -> Date {
+    let initial = dateYMD(year, month, day)
+    let weekday = calendar.component(.weekday, from: initial)
+    let offset = (2 - weekday + 7) % 7
+    return calendar.date(byAdding: .day, value: offset, to: initial)!
+}
+
+func nextSemesterStart(after date: Date) -> Date {
+    let y = calendar.component(.year, from: date)
+    return firstMonday(after: y, month: 9, day: 20)
+}
+
+func calculateSemesterStart(for referenceDate: Date) throws -> Date {
+
+    // 1) Identify boundaries of the “current academic year”
+    let year = calendar.component(.year, from: referenceDate)
+    let winterSemesterStart = firstMonday(after: year, month: 9, day: 20)  // e.g. 9/20 -> first Monday
+    let summerSemesterStart = firstMonday(after: year, month: 2, day: 10) // e.g. 2/10 -> first Monday
+
+    // 2) Winter break: 14th week starts on Monday after 13 weeks
+    let winterBreakStart = calendar.date(byAdding: .weekOfYear, value: 13, to: winterSemesterStart)!
+    let winterBreakEnd = dateYMD(year, 12, 31)
+
+    // 3) Winter exam period: from Jan 1 to day before summer semester
+    let examPeriodStart = dateYMD(year, 1, 1)
+    let dayBeforeSummerStart = calendar.date(byAdding: .day, value: -1, to: summerSemesterStart)!
+
+    // 4) Summer break: June 1 to August 31
+    let juneStart = dateYMD(year, 6, 1)
+    let augEnd    = dateYMD(year, 8, 31)
     
-    func firstMonday(after year: Int, month: Int, day: Int) -> Date {
-        let initialDate = calendar.date(from: DateComponents(year: year, month: month, day: day))!
-        let weekday = calendar.component(.weekday, from: initialDate)
-        let offset = (2 - weekday + 7) % 7
-        return calendar.date(byAdding: .day, value: offset, to: initialDate)!
+    // 5) Early September: Sept 1 until winterSemesterStart
+    let septStart = dateYMD(year, 9, 1)
+
+    // -- Check for winter break
+    if referenceDate >= winterBreakStart && referenceDate <= winterBreakEnd {
+        throw SemesterError.winterBreakActive(endOfBreak: winterBreakEnd)
     }
-    
-    let winterStartCurrentYear = firstMonday(after: referenceYear, month: 9,  day: 20)
-    let summerStartCurrentYear = firstMonday(after: referenceYear, month: 2,  day: 10)
-    let winterStartNextYear    = firstMonday(after: referenceYear + 1, month: 9,  day: 20)
-    
-    if referenceDate >= summerStartCurrentYear && referenceDate < winterStartCurrentYear {
-        return summerStartCurrentYear
-    } else if referenceDate >= winterStartCurrentYear {
-        return winterStartCurrentYear
+
+    // -- Check for winter exam period
+    if referenceDate >= examPeriodStart && referenceDate <= dayBeforeSummerStart {
+        throw SemesterError.examPeriodActive(endOfExams: dayBeforeSummerStart)
+    }
+
+    // -- Check for summer break or early September or before summer semester
+    if (referenceDate >= juneStart && referenceDate <= augEnd)
+        || (referenceDate >= septStart && referenceDate < winterSemesterStart)
+        || (referenceDate < summerSemesterStart) {
+        throw SemesterError.notInSemester(nextSemesterStart: nextSemesterStart(after: referenceDate))
+    }
+
+    // 6) If not in break/exams, we are presumably in a semester.
+    //    Decide if it’s summer or winter, based on referenceDate.
+    //    - If referenceDate >= summerSemesterStart and < winterSemesterStart => summer
+    //    - If referenceDate >= winterSemesterStart => winter
+    //    - Else => must be the winter from previous year
+    if referenceDate >= summerSemesterStart && referenceDate < winterSemesterStart {
+        return summerSemesterStart
+    } else if referenceDate >= winterSemesterStart {
+        return winterSemesterStart
     } else {
-        return firstMonday(after: referenceYear - 1, month: 9, day: 20)
+        // Must be the previous winter
+        return firstMonday(after: year - 1, month: 9, day: 20)
     }
+}
+
+private func firstMondayAfterNewYear(year: Int) -> Date {
+    return firstMonday(after: year, month: 1, day: 1)
 }
 
 struct ContentView: View {
     private let referenceDate: Date
-    private var semesterStart: Date {
-        calculateSemesterStart(for: referenceDate)
-    }
-    
     @State private var currentWeek: Int?
     @State private var displayText: String = ""
-
+    
     init(referenceDate: Date = Date()) {
         self.referenceDate = referenceDate
     }
-
+    
     var body: some View {
         VStack {
             Text(displayText)
@@ -78,18 +136,34 @@ struct ContentView: View {
     }
 
     private func updateWeek() {
-        let now = Calendar.current.startOfDay(for: referenceDate)
-        if now >= semesterStart {
-            let daysDifference = Calendar.current.dateComponents([.day], from: semesterStart, to: now).day ?? 0
-            let weekOffset = [0, 5, 6].contains(Calendar.current.component(.weekday, from: now)) ? 0 : 1
+        let now = calendar.startOfDay(for: referenceDate)
+        do {
+            let semesterStart = try calculateSemesterStart(for: now)
+            let daysDifference = calendar.dateComponents([.day], from: semesterStart, to: now).day ?? 0
+            let weekday = calendar.component(.weekday, from: now)
+            let weekOffset = [0, 5, 6].contains(weekday) ? 0 : 1
             currentWeek = (daysDifference / 7) + weekOffset
-
             displayText = "\(currentWeek ?? 0)"
-        } else {
+        } catch SemesterError.winterBreakActive(let endOfBreak) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateStyle = .medium
-            displayText = "Vidíme sa \(formatter.string(from: semesterStart))!"
+            displayText = "Veselé sviatky a veľa šťastia pri príprave na skúšky! Prestávka do \(formatter.string(from: endOfBreak))"
+        } catch SemesterError.examPeriodActive(let endOfExams) {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "sk")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateStyle = .medium
+            displayText = "Veľa šťastia na skúškach! Skúškové končí \(formatter.string(from: endOfExams))"
+        } catch SemesterError.notInSemester(let nextSemesterStart) {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "sk")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateStyle = .medium
+            displayText = "Vidíme sa \(formatter.string(from: nextSemesterStart))!"
+        } catch {
+            displayText = "Nepodarilo sa určiť semester."
         }
     }
 }

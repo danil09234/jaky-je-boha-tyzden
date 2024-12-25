@@ -14,6 +14,8 @@
 		FA7ECAA92D1B729F00C23B32 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA7ECAA82D1B729F00C23B32 /* Roboto-Bold.ttf */; };
 		FA7ECAB72D1B967F00C23B32 /* WhatWeekOnTUKETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7ECAB62D1B967F00C23B32 /* WhatWeekOnTUKETests.swift */; };
 		FA7ECABD2D1B968900C23B32 /* SemesterStartCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7ECAAD2D1B8C3800C23B32 /* SemesterStartCalculatorTests.swift */; };
+		FA7ECAC52D1BA4DD00C23B32 /* WearableWhatWeekOnTUKEExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7ECAC42D1BA4DD00C23B32 /* WearableWhatWeekOnTUKEExtension.swift */; };
+		FA7ECAC72D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7ECAC62D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,10 @@
 		FA7ECAAD2D1B8C3800C23B32 /* SemesterStartCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterStartCalculatorTests.swift; sourceTree = "<group>"; };
 		FA7ECAB42D1B967F00C23B32 /* WhatWeekOnTUKETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhatWeekOnTUKETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7ECAB62D1B967F00C23B32 /* WhatWeekOnTUKETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatWeekOnTUKETests.swift; sourceTree = "<group>"; };
+		FA7ECAC22D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = WearableWhatWeekOnTUKE.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA7ECAC42D1BA4DD00C23B32 /* WearableWhatWeekOnTUKEExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableWhatWeekOnTUKEExtension.swift; sourceTree = "<group>"; };
+		FA7ECAC62D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WearableWhatWeekOnTUKE.swift; sourceTree = "<group>"; };
+		FA7ECAC82D1BA4DD00C23B32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +61,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FA7ECABF2D1BA4DD00C23B32 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -63,6 +76,7 @@
 			children = (
 				FA7ECA982D1B6F2800C23B32 /* WhatWeekOnTUKE */,
 				FA7ECAB52D1B967F00C23B32 /* WhatWeekOnTUKETests */,
+				FA7ECAC32D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE */,
 				FA7ECA972D1B6F2800C23B32 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +86,7 @@
 			children = (
 				FA7ECA962D1B6F2800C23B32 /* WhatWeekOnTUKE.app */,
 				FA7ECAB42D1B967F00C23B32 /* WhatWeekOnTUKETests.xctest */,
+				FA7ECAC22D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,6 +120,16 @@
 				FA7ECAB62D1B967F00C23B32 /* WhatWeekOnTUKETests.swift */,
 			);
 			path = WhatWeekOnTUKETests;
+			sourceTree = "<group>";
+		};
+		FA7ECAC32D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE */ = {
+			isa = PBXGroup;
+			children = (
+				FA7ECAC42D1BA4DD00C23B32 /* WearableWhatWeekOnTUKEExtension.swift */,
+				FA7ECAC62D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.swift */,
+				FA7ECAC82D1BA4DD00C23B32 /* Info.plist */,
+			);
+			path = WearableWhatWeekOnTUKE;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +170,23 @@
 			productReference = FA7ECAB42D1B967F00C23B32 /* WhatWeekOnTUKETests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		FA7ECAC12D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA7ECAC92D1BA4DD00C23B32 /* Build configuration list for PBXNativeTarget "WearableWhatWeekOnTUKE" */;
+			buildPhases = (
+				FA7ECABE2D1BA4DD00C23B32 /* Sources */,
+				FA7ECABF2D1BA4DD00C23B32 /* Frameworks */,
+				FA7ECAC02D1BA4DD00C23B32 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WearableWhatWeekOnTUKE;
+			productName = WearableWhatWeekOnTUKE;
+			productReference = FA7ECAC22D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -161,6 +203,9 @@
 					FA7ECAB32D1B967F00C23B32 = {
 						CreatedOnToolsVersion = 15.0;
 						TestTargetID = FA7ECA952D1B6F2800C23B32;
+					};
+					FA7ECAC12D1BA4DD00C23B32 = {
+						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
@@ -179,6 +224,7 @@
 			targets = (
 				FA7ECA952D1B6F2800C23B32 /* WhatWeekOnTUKE */,
 				FA7ECAB32D1B967F00C23B32 /* WhatWeekOnTUKETests */,
+				FA7ECAC12D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE */,
 			);
 		};
 /* End PBXProject section */
@@ -195,6 +241,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FA7ECAB22D1B967F00C23B32 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA7ECAC02D1BA4DD00C23B32 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -219,6 +272,15 @@
 			files = (
 				FA7ECABD2D1B968900C23B32 /* SemesterStartCalculatorTests.swift in Sources */,
 				FA7ECAB72D1B967F00C23B32 /* WhatWeekOnTUKETests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA7ECABE2D1BA4DD00C23B32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA7ECAC72D1BA4DD00C23B32 /* WearableWhatWeekOnTUKE.swift in Sources */,
+				FA7ECAC52D1BA4DD00C23B32 /* WearableWhatWeekOnTUKEExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +531,63 @@
 			};
 			name = Release;
 		};
+		FA7ECACA2D1BA4DD00C23B32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YFHPJRC572;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WearableWhatWeekOnTUKE/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WearableWhatWeekOnTUKE;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Argon.WearableWhatWeekOnTUKE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		FA7ECACB2D1BA4DD00C23B32 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YFHPJRC572;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WearableWhatWeekOnTUKE/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WearableWhatWeekOnTUKE;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Argon.WearableWhatWeekOnTUKE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -495,6 +614,15 @@
 			buildConfigurations = (
 				FA7ECABB2D1B967F00C23B32 /* Debug */,
 				FA7ECABC2D1B967F00C23B32 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA7ECAC92D1BA4DD00C23B32 /* Build configuration list for PBXNativeTarget "WearableWhatWeekOnTUKE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA7ECACA2D1BA4DD00C23B32 /* Debug */,
+				FA7ECACB2D1BA4DD00C23B32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
