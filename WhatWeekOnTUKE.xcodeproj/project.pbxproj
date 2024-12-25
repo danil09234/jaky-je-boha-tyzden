@@ -16,6 +16,7 @@
 		FAB08DDE2D1CBED600FA41D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA612592D1CB73D00CF3DB4 /* ContentView.swift */; };
 		FAB08DDF2D1CBEDC00FA41D7 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB08DC42D1CBD7200FA41D7 /* Roboto-Bold.ttf */; };
 		FAB08DE32D1CC15900FA41D7 /* WhatWeekOnTUKEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08DE22D1CC15900FA41D7 /* WhatWeekOnTUKEApp.swift */; };
+		FAB08DE52D1CC46600FA41D7 /* SemesterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08DE42D1CC46600FA41D7 /* SemesterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		FAB08DE02D1CBF4C00FA41D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FAB08DE12D1CBF7100FA41D7 /* WhatWeekOnTUKE-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WhatWeekOnTUKE-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		FAB08DE22D1CC15900FA41D7 /* WhatWeekOnTUKEApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatWeekOnTUKEApp.swift; sourceTree = "<group>"; };
+		FAB08DE42D1CC46600FA41D7 /* SemesterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemesterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				FAB08DE02D1CBF4C00FA41D7 /* Info.plist */,
 				FAA612572D1CB73D00CF3DB4 /* WhatWeekOnTUKEApp.swift */,
 				FAA612592D1CB73D00CF3DB4 /* ContentView.swift */,
+				FAB08DE42D1CC46600FA41D7 /* SemesterViewModel.swift */,
 				FAA6125B2D1CB73E00CF3DB4 /* Assets.xcassets */,
 				FAA6125D2D1CB73E00CF3DB4 /* Preview Content */,
 			);
@@ -244,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB08DDD2D1CBED600FA41D7 /* WhatWeekOnTUKEApp.swift in Sources */,
+				FAB08DE52D1CC46600FA41D7 /* SemesterViewModel.swift in Sources */,
 				FAB08DDE2D1CBED600FA41D7 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
