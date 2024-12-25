@@ -3,7 +3,7 @@ import SwiftUI
 enum SemesterError: Error {
     case notInSemester(nextSemesterStart: Date)
     case examPeriodActive(endOfExams: Date)
-    case winterBreakActive(endOfBreak: Date)
+    case winterBreakActive(endOfBreak: Date, examPeriodStart: Date)
 }
 
 extension Color {
@@ -76,10 +76,11 @@ func calculateSemesterStart(for referenceDate: Date) throws -> Date {
     
     // 5) Early September: Sept 1 until winterSemesterStart
     let septStart = dateYMD(year, 9, 1)
-
+    
     // -- Check for winter break
     if referenceDate >= winterBreakStart && referenceDate <= winterBreakEnd {
-        throw SemesterError.winterBreakActive(endOfBreak: winterBreakEnd)
+        let examPeriodStart = Calendar.current.date(byAdding: .day, value: 1, to: winterBreakEnd)!
+        throw SemesterError.winterBreakActive(endOfBreak: winterBreakEnd, examPeriodStart: examPeriodStart)
     }
 
     // -- Check for winter exam period
@@ -144,18 +145,18 @@ struct ContentView: View {
             let weekOffset = [0, 5, 6].contains(weekday) ? 0 : 1
             currentWeek = (daysDifference / 7) + weekOffset
             displayText = "\(currentWeek ?? 0)"
-        } catch SemesterError.winterBreakActive(let endOfBreak) {
+        } catch SemesterError.winterBreakActive(let endOfBreak, let examPeriodStart) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateStyle = .medium
-            displayText = "Veselé sviatky a veľa šťastia pri príprave na skúšky! Prestávka do \(formatter.string(from: endOfBreak))"
+            displayText = "Veselé sviatky a veľa šťastia pri príprave na skúšky! Prestávka do \(formatter.string(from: endOfBreak)). Skúškové začínajú \(formatter.string(from: examPeriodStart))."
         } catch SemesterError.examPeriodActive(let endOfExams) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
             formatter.dateStyle = .medium
-            displayText = "Veľa šťastia na skúškach! Skúškové končí \(formatter.string(from: endOfExams))"
+            displayText = "Veľa šťastia na skúškach! Skúškové končia \(formatter.string(from: endOfExams))"
         } catch SemesterError.notInSemester(let nextSemesterStart) {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "sk")
