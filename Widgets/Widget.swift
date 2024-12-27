@@ -45,7 +45,7 @@ struct Provider: AppIntentTimelineProvider {
         } catch let error as SemesterError {
             return .error(error)
         } catch {
-            return .error(.notInSemester(nextSemesterStart: Date()))
+            return .displayNone
         }
     }
 }
@@ -53,6 +53,7 @@ struct Provider: AppIntentTimelineProvider {
 enum DisplayState {
     case week(Int)
     case error(SemesterError)
+    case displayNone
 }
 
 struct SimpleEntry: TimelineEntry {
@@ -78,6 +79,8 @@ struct WeekWidgetEntryView: View {
                     Text("\(week)").font(.headline)
                 case .error(let error):
                     Text(errorMessage(for: error)).font(.headline)
+                case .displayNone:
+                    Text("-").font(.headline)
                 }
             }
         case .accessoryCircular:
@@ -87,6 +90,8 @@ struct WeekWidgetEntryView: View {
                     Text("\(week)").font(.title)
                 case .error(_):
                     Text("Error").font(.title)
+                case .displayNone:
+                    Text("-").font(.title)
                 }
             }
         case .accessoryInline:
@@ -96,6 +101,8 @@ struct WeekWidgetEntryView: View {
                     Text("Week \(week)").font(.headline)
                 case .error:
                     Text("Error fetching week").font(.headline)
+                case .displayNone:
+                    Text("-").font(.headline)
                 }
             }
         case .accessoryRectangular:
@@ -105,6 +112,8 @@ struct WeekWidgetEntryView: View {
                     Text("Week \(week)").font(.headline).widgetAccentable()
                 case .error:
                     Text("Error").font(.headline).widgetAccentable()
+                case .displayNone:
+                    Text("-").font(.headline).widgetAccentable()
                 }
             }
 #if os(iOS)
@@ -128,6 +137,10 @@ struct WeekWidgetEntryView: View {
                         Text("Error")
                             .font(.system(size: 96, weight: .bold, design: .rounded))
                             .frame(height: heightForFontSize(size: 96))
+                    case .displayNone:
+                        Text("-")
+                            .font(.system(size: 96, weight: .bold, design: .rounded))
+                            .frame(height: heightForFontSize(size: 96))
                     }
                 }
             }
@@ -139,6 +152,8 @@ struct WeekWidgetEntryView: View {
                     Text("\(week)").font(.headline)
                 case .error:
                     Text("N/A").font(.headline)
+                case .displayNone:
+                    Text("-").font(.headline)
                 }
             }
         }
@@ -284,7 +299,7 @@ struct Widget_Previews: PreviewProvider {
         } catch let error as SemesterError {
             displayState = .error(error)
         } catch {
-            displayState = .error(.notInSemester(nextSemesterStart: Date()))
+            displayState = .displayNone
         }
         
         return SimpleEntry(
@@ -300,6 +315,13 @@ struct Widget_Previews: PreviewProvider {
                     .previewContext(WidgetPreviewContext(family: .accessoryCircular))
                     .previewDisplayName(preview.displayName)
             }
+            
+            WeekWidgetEntryView(entry: SimpleEntry(
+                date: Date(),
+                displayState: .displayNone
+            ))
+            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+            .previewDisplayName("Display None")
         }
     }
     
