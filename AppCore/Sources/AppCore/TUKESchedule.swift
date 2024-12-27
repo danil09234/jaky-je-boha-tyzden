@@ -1,9 +1,9 @@
 import Foundation
 
-public enum SemesterError: Error {
-    case notInSemester(nextSemesterStart: Date)
-    case examPeriodActive(endOfExams: Date)
+public enum SemesterError: Error, Hashable {
     case winterBreakActive(endOfBreak: Date, examPeriodStart: Date)
+    case examPeriodActive(endOfExams: Date)
+    case notInSemester(nextSemesterStart: Date)
 }
 
 public class TUKESchedule {
@@ -88,5 +88,18 @@ public class TUKESchedule {
         return (date >= juneStart && date <= augEnd)
             || (date >= septStart && date < winterSemesterStart)
             || (date < summerSemesterStart)
+    }
+    
+    /// Calculates the current semester week number based on the provided date.
+    /// - Parameter date: The reference date.
+    /// - Returns: The calculated week number.
+    /// - Throws: `SemesterError` if the date is not within a semester.
+    public static func calculateWeekNumber(for date: Date) throws -> Int {
+        let semesterStart = try calculateSemesterStart(for: date)
+        let daysDifference = calendar.dateComponents([.day], from: semesterStart, to: date).day ?? 0
+        let weekday = calendar.component(.weekday, from: date)
+        let weekOffset = [1, 6, 7].contains(weekday) ? 0 : 1 // Sunday=1, Saturday=7 in Calendar
+        let calculatedWeek = (daysDifference / 7) + weekOffset
+        return calculatedWeek
     }
 }

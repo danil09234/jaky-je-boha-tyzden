@@ -4,10 +4,20 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>WhatWeekOnTUKE Watch App.xcscheme_^#shared#^_</key>
+		<key>WeekWidgetExtension Mobile.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>WeekWidgetExtension Watch.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>5</integer>
+		</dict>
+		<key>WhatWeekOnTUKE Watch App.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>WhatWeekOnTUKE.xcscheme_^#shared#^_</key>
 		<dict>
@@ -23,6 +33,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>FA26D2682D1CBA6400A29D3C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FA3121FF2D1E0C8300D620CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -53,6 +68,11 @@
 			<true/>
 		</dict>
 		<key>FAB08DCA2D1CBE1400FA41D7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FAB08E012D1DD5EC00FA41D7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
