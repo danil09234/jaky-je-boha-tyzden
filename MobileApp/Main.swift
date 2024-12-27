@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct WhatWeekOnTUKEApp: App {
+struct MobileApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

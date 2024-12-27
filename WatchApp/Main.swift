@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct WearableWhatWeekOnTUKE_Watch_AppApp: App {
+struct WatchApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
