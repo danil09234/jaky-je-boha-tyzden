@@ -8,7 +8,7 @@ public class SemesterViewModel: SemesterViewModelBase {
         switch error {
         case .winterBreakActive(let endOfBreak, let examPeriodStart):
             let message = """
-            Veselé sviatky!
+            Veselé sviatky!\n\n
             Prestávka do \(Self.formatter.string(from: endOfBreak)).
             Skúšky od \(Self.formatter.string(from: examPeriodStart)).
             """
