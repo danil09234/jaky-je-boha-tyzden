@@ -5,18 +5,23 @@ import AppIntents
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent(), displayText: "14")
+        SimpleEntry(
+            date: Date(),
+            displayText: "14"
+        )
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration, displayText: fetchWeekNumber())
+        SimpleEntry(
+            date: Date(),
+            displayText: fetchWeekNumber()
+        )
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
         let currentDate = Date()
         let entry = SimpleEntry(
             date: currentDate,
-            configuration: configuration,
             displayText: fetchWeekNumber()
         )
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
@@ -25,7 +30,10 @@ struct Provider: AppIntentTimelineProvider {
 
     @available(iOSApplicationExtension 17.0, *)
     func recommendations() -> [AppIntentRecommendation<ConfigurationAppIntent>] {
-        [AppIntentRecommendation(intent: ConfigurationAppIntent(), description: "Current TUKE week indicator")]
+        [AppIntentRecommendation(
+            intent: ConfigurationAppIntent(),
+            description: "Current TUKE week indicator"
+        )]
     }
 
     private func fetchWeekNumber() -> String {
@@ -40,7 +48,6 @@ struct Provider: AppIntentTimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationAppIntent
     let displayText: String
 }
 
@@ -57,43 +64,53 @@ struct WeekWidgetEntryView: View {
     var body: some View {
         switch family {
         case .accessoryCorner:
-            Text(entry.displayText)
-                .font(.headline)
-                .containerBackground(for: .widget) {}
+            containerBackgroundIfAvailable {
+                Text(entry.displayText).font(.headline)
+            }
         case .accessoryCircular:
-            Text(entry.displayText)
-                .font(.title)
-                .containerBackground(for: .widget) {}
+            containerBackgroundIfAvailable {
+                Text(entry.displayText).font(.title)
+            }
         case .accessoryInline:
-            Text(entry.displayText)
-                .font(.headline)
-                .containerBackground(for: .widget) {}
+            containerBackgroundIfAvailable {
+                Text(entry.displayText).font(.headline)
+            }
         case .accessoryRectangular:
-            Text(entry.displayText)
-                .font(.headline)
-                .widgetAccentable()
-                .containerBackground(for: .widget) {}
+            containerBackgroundIfAvailable {
+                Text(entry.displayText).font(.headline).widgetAccentable()
+            }
 #if os(iOS)
         case .systemSmall:
-            VStack(spacing: 10) {
-                HStack(spacing: 5) {
-                    Text("TUKE")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                        .foregroundColor(.red)
-                    Text("Week")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                        .foregroundColor(.gray)
+            containerBackgroundIfAvailable {
+                VStack(spacing: 10) {
+                    HStack(spacing: 5) {
+                        Text("TUKE")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundColor(.red)
+                        Text("Week")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundColor(.gray)
+                    }
+                    Text(entry.displayText)
+                        .font(.system(size: 96, weight: .bold, design: .rounded))
+                        .frame(height: heightForFontSize(size: 96))
                 }
-                Text(entry.displayText)
-                    .font(.system(size: 96, weight: .bold, design: .rounded))
-                    .frame(height: heightForFontSize(size: 96))
             }
-            .containerBackground(for: .widget) {}
 #endif
         default:
-            Text(entry.displayText)
-                .font(.headline)
-                .containerBackground(for: .widget) {}
+            containerBackgroundIfAvailable {
+                Text(entry.displayText).font(.headline)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            content()
+                .containerBackground(for: .widget) { }
+        } else {
+            content()
         }
     }
 }
@@ -101,32 +118,83 @@ struct WeekWidgetEntryView: View {
 @main
 struct WeekWidget: Widget {
     let kind: String = "WeekWidget"
-
+    
     var body: some WidgetConfiguration {
-        return AppIntentConfiguration(
-            kind: kind,
-            intent: ConfigurationAppIntent.self,
-            provider: Provider()
-        ) { entry in
-            WeekWidgetEntryView(entry: entry)
-        }
-        .configurationDisplayName("TUKE Week Widget")
-        .description("Displays only a current week.")
 #if os(watchOS)
-        .supportedFamilies([
+        let families: [WidgetFamily] = [
             .accessoryCircular,
             .accessoryInline,
             .accessoryRectangular,
-            .accessoryCorner,
-        ])
+            .accessoryCorner
+        ]
 #else
-        .supportedFamilies([
+        let families: [WidgetFamily] = [
             .accessoryCircular,
             .accessoryInline,
             .accessoryRectangular,
-            .systemSmall,
-        ])
+            .systemSmall
+        ]
 #endif
+        
+        if #available(iOSApplicationExtension 17.0, *) {
+            return AppIntentConfiguration(
+                kind: kind,
+                intent: ConfigurationAppIntent.self,
+                provider: Provider()
+            ) { entry in
+                WeekWidgetEntryView(entry: entry)
+            }
+            .configurationDisplayName("TUKE Week Widget")
+            .description("Displays only a current week.")
+            .supportedFamilies(families)
+        } else {
+            return StaticConfiguration(
+                kind: kind,
+                provider: FallbackProvider()
+            ) { entry in
+                WeekWidgetEntryView(entry: entry)
+            }
+            .configurationDisplayName("TUKE Week Widget")
+            .description("Displays only a current week.")
+            .supportedFamilies(families)
+        }
+    }
+}
+
+fileprivate struct FallbackProvider: TimelineProvider {
+    func placeholder(in context: Context) -> SimpleEntry {
+        SimpleEntry(
+            date: Date(),
+            displayText: "14"
+        )
+    }
+    
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        completion(
+            SimpleEntry(
+                date: Date(),
+                displayText: fetchWeekNumber()
+            )
+        )
+    }
+    
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+        let now = Date()
+        let entry = SimpleEntry(
+            date: now,
+            displayText: fetchWeekNumber()
+        )
+        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: now)!
+        completion(Timeline(entries: [entry], policy: .after(nextUpdate)))
+    }
+    
+    private func fetchWeekNumber() -> String {
+        do {
+            let week = try TUKESchedule.calculateWeekNumber(for: Date())
+            return String(week)
+        } catch {
+            return ""
+        }
     }
 }
 
@@ -140,19 +208,19 @@ extension ConfigurationAppIntent {
 struct Widget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: .sample, displayText: "14"))
+            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayText: "14"))
                 .previewContext(WidgetPreviewContext(family: .accessoryCircular))
                 .previewDisplayName("Circular")
             
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: .sample, displayText: "14"))
+            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayText: "14"))
                 .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
                 .previewDisplayName("Rectangular")
             
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: .sample, displayText: "Week 14"))
+            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayText: "Week 14"))
                 .previewContext(WidgetPreviewContext(family: .accessoryInline))
                 .previewDisplayName("Inline")
 #if os(iOS)
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: .sample, displayText: "14"))
+            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayText: "14"))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .previewDisplayName("System Small")
 #endif
