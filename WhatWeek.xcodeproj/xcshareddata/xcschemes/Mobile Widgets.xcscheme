@@ -18,7 +18,7 @@
                BlueprintIdentifier = "FA3121FF2D1E0C8300D620CA"
                BuildableName = "Mobile Widget.appex"
                BlueprintName = "Mobile Widget"
-               ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+               ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
             BlueprintIdentifier = "FA3121FF2D1E0C8300D620CA"
             BuildableName = "Mobile Widget.appex"
             BlueprintName = "Mobile Widget"
-            ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+            ReferencedContainer = "container:WhatWeek.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -83,7 +83,7 @@
             BlueprintIdentifier = "FA3121FF2D1E0C8300D620CA"
             BuildableName = "Mobile Widget.appex"
             BlueprintName = "Mobile Widget"
-            ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+            ReferencedContainer = "container:WhatWeek.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

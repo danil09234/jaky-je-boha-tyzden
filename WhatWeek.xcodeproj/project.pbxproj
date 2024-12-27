@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA3122032D1E0C8300D620CA /* WeekWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08E062D1DD5EC00FA41D7 /* WeekWidget.swift */; };
+		FA3122032D1E0C8300D620CA /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08E062D1DD5EC00FA41D7 /* Widget.swift */; };
 		FA3122042D1E0C8300D620CA /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08E082D1DD5EC00FA41D7 /* AppIntent.swift */; };
 		FA3122062D1E0C8300D620CA /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = FA3122012D1E0C8300D620CA /* AppCore */; };
 		FA3122072D1E0C8300D620CA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB08DED2D1CCB2A00FA41D7 /* SwiftUI.framework */; };
@@ -26,7 +26,7 @@
 		FAB08DE52D1CC46600FA41D7 /* SemesterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08DE42D1CC46600FA41D7 /* SemesterViewModel.swift */; };
 		FAB08E032D1DD5EC00FA41D7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB08DEB2D1CCB2A00FA41D7 /* WidgetKit.framework */; };
 		FAB08E042D1DD5EC00FA41D7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB08DED2D1CCB2A00FA41D7 /* SwiftUI.framework */; };
-		FAB08E072D1DD5EC00FA41D7 /* WeekWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08E062D1DD5EC00FA41D7 /* WeekWidget.swift */; };
+		FAB08E072D1DD5EC00FA41D7 /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08E062D1DD5EC00FA41D7 /* Widget.swift */; };
 		FAB08E092D1DD5EC00FA41D7 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08E082D1DD5EC00FA41D7 /* AppIntent.swift */; };
 		FAB08E0B2D1DD5ED00FA41D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAB08E0A2D1DD5ED00FA41D7 /* Assets.xcassets */; };
 		FAB08E0F2D1DD5ED00FA41D7 /* Watch Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAB08E022D1DD5EC00FA41D7 /* Watch Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -97,7 +97,7 @@
 		FAB08DEB2D1CCB2A00FA41D7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FAB08DED2D1CCB2A00FA41D7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FAB08E022D1DD5EC00FA41D7 /* Watch Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Watch Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAB08E062D1DD5EC00FA41D7 /* WeekWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekWidget.swift; sourceTree = "<group>"; };
+		FAB08E062D1DD5EC00FA41D7 /* Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		FAB08E082D1DD5EC00FA41D7 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		FAB08E0A2D1DD5ED00FA41D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAB08E0C2D1DD5ED00FA41D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 		FAB08E052D1DD5EC00FA41D7 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				FAB08E062D1DD5EC00FA41D7 /* WeekWidget.swift */,
+				FAB08E062D1DD5EC00FA41D7 /* Widget.swift */,
 				FAB08E082D1DD5EC00FA41D7 /* AppIntent.swift */,
 				FAB08E0A2D1DD5ED00FA41D7 /* Assets.xcassets */,
 				FAB08E0C2D1DD5ED00FA41D7 /* Info.plist */,
@@ -342,7 +342,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FA7ECA912D1B6F2800C23B32 /* Build configuration list for PBXProject "WhatWeekOnTUKE" */;
+			buildConfigurationList = FA7ECA912D1B6F2800C23B32 /* Build configuration list for PBXProject "WhatWeek" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -413,7 +413,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA3122032D1E0C8300D620CA /* WeekWidget.swift in Sources */,
+				FA3122032D1E0C8300D620CA /* Widget.swift in Sources */,
 				FA3122042D1E0C8300D620CA /* AppIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,7 +432,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAB08E072D1DD5EC00FA41D7 /* WeekWidget.swift in Sources */,
+				FAB08E072D1DD5EC00FA41D7 /* Widget.swift in Sources */,
 				FAB08E092D1DD5EC00FA41D7 /* AppIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -874,7 +874,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FA7ECA912D1B6F2800C23B32 /* Build configuration list for PBXProject "WhatWeekOnTUKE" */ = {
+		FA7ECA912D1B6F2800C23B32 /* Build configuration list for PBXProject "WhatWeek" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FA7ECAA32D1B6F2900C23B32 /* Debug */,

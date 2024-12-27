@@ -26,7 +26,7 @@
                BlueprintIdentifier = "FAB08DCA2D1CBE1400FA41D7"
                BuildableName = "Mobile App.app"
                BlueprintName = "Mobile App"
-               ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+               ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,7 +46,7 @@
                BlueprintIdentifier = "FA7ECAB32D1B967F00C23B32"
                BuildableName = "WhatWeekOnTUKETests.xctest"
                BlueprintName = "WhatWeekOnTUKETests"
-               ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+               ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,7 +68,7 @@
             BlueprintIdentifier = "FAB08DCA2D1CBE1400FA41D7"
             BuildableName = "Mobile App.app"
             BlueprintName = "Mobile App"
-            ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+            ReferencedContainer = "container:WhatWeek.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -84,7 +84,7 @@
             BlueprintIdentifier = "FAB08DCA2D1CBE1400FA41D7"
             BuildableName = "Mobile App.app"
             BlueprintName = "Mobile App"
-            ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+            ReferencedContainer = "container:WhatWeek.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

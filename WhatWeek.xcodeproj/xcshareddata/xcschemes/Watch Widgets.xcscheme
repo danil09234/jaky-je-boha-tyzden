@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1500"
-   version = "1.7">
+   wasCreatedForAppExtension = "YES"
+   version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FA26D2682D1CBA6400A29D3C"
-               BuildableName = "Watch App.app"
-               BlueprintName = "Watch App"
-               ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+               BlueprintIdentifier = "FAB08E012D1DD5EC00FA41D7"
+               BuildableName = "Watch Widget.appex"
+               BlueprintName = "Watch Widget"
+               ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +29,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FAB08DCA2D1CBE1400FA41D7"
-               BuildableName = "Mobile App.app"
-               BlueprintName = "Mobile App"
-               ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+               BlueprintIdentifier = "FA26D2682D1CBA6400A29D3C"
+               BuildableName = "Watch App.app"
+               BlueprintName = "Watch App"
+               ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,24 +46,52 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
+      askForAppToLaunch = "Yes"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
+      allowLocationSimulation = "YES"
+      launchAutomaticallySubstyle = "2">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FAB08E012D1DD5EC00FA41D7"
+            BuildableName = "Watch Widget.appex"
+            BlueprintName = "Watch Widget"
+            ReferencedContainer = "container:WhatWeek.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA26D2682D1CBA6400A29D3C"
             BuildableName = "Watch App.app"
             BlueprintName = "Watch App"
-            ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+            ReferencedContainer = "container:WhatWeek.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "_XCWidgetKind"
+            value = ""
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetDefaultView"
+            value = "timeline"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "_XCWidgetFamily"
+            value = "systemMedium"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -74,10 +103,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FA26D2682D1CBA6400A29D3C"
-            BuildableName = "Watch App.app"
-            BlueprintName = "Watch App"
-            ReferencedContainer = "container:WhatWeekOnTUKE.xcodeproj">
+            BlueprintIdentifier = "FAB08E012D1DD5EC00FA41D7"
+            BuildableName = "Watch Widget.appex"
+            BlueprintName = "Watch Widget"
+            ReferencedContainer = "container:WhatWeek.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
