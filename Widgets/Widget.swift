@@ -126,6 +126,8 @@ struct WeekWidgetEntryView: View {
                             .frame(height: heightForFontSize(size: 96))
                     case .error:
                         Text("Error")
+                            .font(.system(size: 96, weight: .bold, design: .rounded))
+                            .frame(height: heightForFontSize(size: 96))
                     }
                 }
             }
@@ -259,29 +261,45 @@ extension ConfigurationAppIntent {
 }
 
 struct Widget_Previews: PreviewProvider {
+    private struct PreviewData {
+        let displayName: String
+        let timestamp: Double
+    }
+    
+    private static let previewTimelines: [PreviewData] = [
+        PreviewData(displayName: "Summer break", timestamp: 1720569600),
+        PreviewData(displayName: "Winter semester - Week 6", timestamp: 1731196800),
+        PreviewData(displayName: "Winter break", timestamp: 1735325027),
+        PreviewData(displayName: "Winter exams", timestamp: 1735689600),
+        PreviewData(displayName: "Summer semester - Week 2", timestamp: 1740787200)
+    ]
+    
+    private static func generateEntry(from timestamp: Double) -> SimpleEntry {
+        let date = Date(timeIntervalSince1970: timestamp)
+        let displayState: DisplayState
+        
+        do {
+            let week = try TUKESchedule.calculateWeekNumber(for: date)
+            displayState = .week(week)
+        } catch let error as SemesterError {
+            displayState = .error(error)
+        } catch {
+            displayState = .error(.notInSemester(nextSemesterStart: Date()))
+        }
+        
+        return SimpleEntry(
+            date: date,
+            displayState: displayState
+        )
+    }
+    
     static var previews: some View {
         Group {
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayState: .week(14)))
-                .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-                .previewDisplayName("Circular")
-            
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayState: .week(14)))
-                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-                .previewDisplayName("Rectangular")
-            
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayState: .week(14)))
-                .previewContext(WidgetPreviewContext(family: .accessoryInline))
-                .previewDisplayName("Inline")
-            
-#if os(iOS)
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayState: .week(14)))
-                .previewContext(WidgetPreviewContext(family: .systemSmall))
-                .previewDisplayName("System Small")
-            
-            WeekWidgetEntryView(entry: SimpleEntry(date: Date(), displayState: .error(.notInSemester(nextSemesterStart: Date()))))
-                .previewContext(WidgetPreviewContext(family: .systemSmall))
-                .previewDisplayName("System Small - Error")
-#endif
+            ForEach(previewTimelines, id: \.displayName) { preview in
+                WeekWidgetEntryView(entry: generateEntry(from: preview.timestamp))
+                    .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+                    .previewDisplayName(preview.displayName)
+            }
         }
     }
     
