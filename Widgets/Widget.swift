@@ -12,7 +12,7 @@ struct Provider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        let result = fetchDisplayState()
+        let result = fetchDisplayState(for: Date())
         return SimpleEntry(
             date: Date(),
             displayState: result
@@ -21,7 +21,7 @@ struct Provider: AppIntentTimelineProvider {
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
         let currentDate = Date()
-        let result = fetchDisplayState()
+        let result = fetchDisplayState(for: currentDate)
         let entry = SimpleEntry(
             date: currentDate,
             displayState: result
@@ -38,12 +38,12 @@ struct Provider: AppIntentTimelineProvider {
         )]
     }
 
-    private func fetchDisplayState() -> DisplayState {
+    private func fetchDisplayState(for date: Date) -> DisplayState {
         do {
-            let week = try TUKESchedule.calculateWeekNumber(for: Date())
+            let week = try TUKESchedule.calculateWeekNumber(for: date)
             return .week(week)
-        } catch let error as SemesterError {
-            return .error(error)
+        } catch let state as SemesterState {
+            return .specialCase(state)
         } catch {
             return .displayNone
         }
@@ -52,7 +52,7 @@ struct Provider: AppIntentTimelineProvider {
 
 enum DisplayState {
     case week(Int)
-    case error(SemesterError)
+    case specialCase(SemesterState)
     case displayNone
 }
 
@@ -66,6 +66,53 @@ private func heightForFontSize(size: CGFloat) -> CGFloat {
     return font.capHeight
 }
 
+extension SemesterState {
+    var iconName: String {
+        switch self {
+        case .winterBreakActive:
+            return "snowflake"
+        case .examPeriodActive:
+            return "book.closed"
+        case .notInSemester:
+            return "sun.max"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .winterBreakActive:
+            return .blue
+        case .examPeriodActive:
+            return .green
+        case .notInSemester:
+            return .orange
+        }
+    }
+    
+    var shortDescription: String {
+        switch self {
+        case .winterBreakActive:
+            return "Prestávka"
+        case .examPeriodActive:
+            return "Skúšky"
+        case .notInSemester:
+            return "Prestávka"
+        }
+    }
+    
+    var detailedDescription: String {
+        switch self {
+        case .winterBreakActive(_, let examPeriodStart):
+            return "Skúškové začína\n\(SemesterViewModelBase.formatter.string(from: examPeriodStart))"
+        case .examPeriodActive(let endOfExams):
+            return "Skúškové končí\n\(SemesterViewModelBase.formatter.string(from: endOfExams))"
+        case .notInSemester(let nextSemesterStart):
+            return "Vidíme sa\n\(SemesterViewModelBase.formatter.string(from: nextSemesterStart))!"
+        }
+    }
+}
+
+
 struct WeekWidgetEntryView: View {
     var entry: SimpleEntry
     @Environment(\.widgetFamily) var family
@@ -76,98 +123,175 @@ struct WeekWidgetEntryView: View {
             containerBackgroundIfAvailable {
                 switch entry.displayState {
                 case .week(let week):
-                    Text("\(week)").font(.headline)
-                case .error(let error):
-                    Text(errorMessage(for: error)).font(.headline)
+                    HStack(alignment: .center) {
+                        Image(systemName: "calendar")
+                            .font(.caption)
+                        Text("\(week)")
+                            .font(.title)
+                            .widgetAccentable()
+                            .bold()
+                    }
+                case .specialCase(let state):
+                    Image(systemName: state.iconName)
+                        .widgetAccentable()
+                        .bold()
+                        .font(.largeTitle)
                 case .displayNone:
-                    Text("-").font(.headline)
+                    Text("-")
+                        .font(.headline)
+                        .foregroundColor(.gray)
                 }
             }
+        
         case .accessoryCircular:
             containerBackgroundIfAvailable {
                 switch entry.displayState {
                 case .week(let week):
-                    Text("\(week)").font(.title)
-                case .error(_):
-                    Text("Error").font(.title)
+                    VStack {
+                        Image(systemName: "calendar")
+                            .font(.caption)
+                        Text("\(week)")
+                            .font(.largeTitle)
+                            .widgetAccentable()
+                            .bold()
+                    }
+                case .specialCase(let state):
+                    VStack {
+#if os(watchOS)
+                        Image(systemName: state.iconName)
+                            .font(.largeTitle)
+                            .foregroundColor(state.color)
+#else
+                        Image(systemName: state.iconName)
+                            .font(.title2)
+                            .foregroundColor(state.color)
+                        Text(state.shortDescription)
+                            .font(.caption)
+                            .foregroundColor(state.color)
+#endif
+                    }
                 case .displayNone:
-                    Text("-").font(.title)
+                    Text("-")
+                        .font(.title)
+                        .foregroundColor(.gray)
                 }
             }
         case .accessoryInline:
             containerBackgroundIfAvailable {
                 switch entry.displayState {
                 case .week(let week):
-                    Text("Week \(week)").font(.headline)
-                case .error:
-                    Text("Error fetching week").font(.headline)
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text("Week \(week)")
+                            .font(.headline)
+                            .widgetAccentable()
+                    }
+                case .specialCase(let state):
+                    HStack {
+                        Image(systemName: state.iconName)
+                        Text(state.shortDescription)
+                            .font(.headline)
+                            .widgetAccentable()
+                    }
                 case .displayNone:
-                    Text("-").font(.headline)
+                    Text("-")
+                        .font(.headline)
+                        .foregroundColor(.gray)
                 }
             }
         case .accessoryRectangular:
             containerBackgroundIfAvailable {
                 switch entry.displayState {
                 case .week(let week):
-                    Text("Week \(week)").font(.headline).widgetAccentable()
-                case .error:
-                    Text("Error").font(.headline).widgetAccentable()
+                    HStack {
+                        Image(systemName: "calendar")
+                            .font(.largeTitle)
+                        VStack {
+                            Text("TUKE")
+                                .foregroundColor(.red)
+                                .bold()
+                            Text("Week")
+                                .foregroundColor(.gray)
+                        }
+                        Text("\(week)")
+                            .font(.title)
+                            .bold()
+                    }
+                case .specialCase(let state):
+                    HStack(spacing: 10) {
+                        Image(systemName: state.iconName)
+                            .font(.title)
+                            .foregroundColor(state.color)
+                        Text(state.shortDescription)
+                            .font(.headline)
+                    }
                 case .displayNone:
-                    Text("-").font(.headline).widgetAccentable()
+                    Text("-")
+                        .font(.title)
+                        .foregroundColor(.gray)
                 }
             }
-#if os(iOS)
         case .systemSmall:
             containerBackgroundIfAvailable {
-                VStack(spacing: 10) {
-                    HStack(spacing: 5) {
-                        Text("TUKE")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                            .foregroundColor(.red)
-                        Text("Week")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                            .foregroundColor(.gray)
-                    }
-                    switch entry.displayState {
-                    case .week(let week):
+                switch entry.displayState {
+                case .week(let week):
+                    VStack(spacing: 10) {
+                        HStack(spacing: 5) {
+                            Text("TUKE")
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                                .foregroundColor(.red)
+                            Text("Week")
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                                .foregroundColor(.gray)
+                        }
                         Text("\(week)")
                             .font(.system(size: 96, weight: .bold, design: .rounded))
                             .frame(height: heightForFontSize(size: 96))
-                    case .error:
-                        Text("Error")
-                            .font(.system(size: 96, weight: .bold, design: .rounded))
-                            .frame(height: heightForFontSize(size: 96))
-                    case .displayNone:
+                    }
+                case .specialCase(let state):
+                    VStack(spacing: 10) {
+                        Image(systemName: state.iconName)
+                            .font(.largeTitle)
+                            .foregroundColor(state.color)
+                        Text(state.detailedDescription)
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                    }
+                case .displayNone:
+                    VStack {
                         Text("-")
-                            .font(.system(size: 96, weight: .bold, design: .rounded))
-                            .frame(height: heightForFontSize(size: 96))
+                            .font(.title)
+                            .foregroundColor(.gray)
                     }
                 }
             }
-#endif
+        
         default:
             containerBackgroundIfAvailable {
                 switch entry.displayState {
                 case .week(let week):
-                    Text("\(week)").font(.headline)
-                case .error:
-                    Text("N/A").font(.headline)
+                    Text("\(week)")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                case .specialCase(let state):
+                    Image(systemName: state.iconName)
+                        .foregroundColor(state.color)
+                        .font(.headline)
                 case .displayNone:
-                    Text("-").font(.headline)
+                    Text("-")
+                        .font(.headline)
+                        .foregroundColor(.gray)
                 }
             }
         }
     }
     
-    private func errorMessage(for error: SemesterError) -> String {
-        switch error {
-        case .winterBreakActive:
-            return "Winter Break"
-        case .examPeriodActive:
-            return "Exam Period"
-        case .notInSemester:
-            return "Not in Semester"
-        }
+    private func shortErrorMessage(for state: SemesterState) -> String {
+        return state.shortDescription
+    }
+    
+    private func detailedErrorMessage(for state: SemesterState) -> String {
+        return state.detailedDescription
     }
     
     @ViewBuilder
@@ -211,7 +335,7 @@ struct WeekWidget: Widget {
                 WeekWidgetEntryView(entry: entry)
             }
             .configurationDisplayName("TUKE Week Widget")
-            .description("Displays the current week or error information.")
+            .description("Displays the current week or special information.")
             .supportedFamilies(families)
         } else {
             return StaticConfiguration(
@@ -221,7 +345,7 @@ struct WeekWidget: Widget {
                 WeekWidgetEntryView(entry: entry)
             }
             .configurationDisplayName("TUKE Week Widget")
-            .description("Displays the current week or error information.")
+            .description("Displays the current week or special information.")
             .supportedFamilies(families)
         }
     }
@@ -236,7 +360,7 @@ fileprivate struct FallbackProvider: TimelineProvider {
     }
     
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let result = FallbackProvider.fetchDisplayState()
+        let result = FallbackProvider.fetchDisplayState(for: Date())
         completion(
             SimpleEntry(
                 date: Date(),
@@ -247,7 +371,7 @@ fileprivate struct FallbackProvider: TimelineProvider {
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         let now = Date()
-        let result = FallbackProvider.fetchDisplayState()
+        let result = FallbackProvider.fetchDisplayState(for: now)
         let entry = SimpleEntry(
             date: now,
             displayState: result
@@ -256,14 +380,14 @@ fileprivate struct FallbackProvider: TimelineProvider {
         completion(Timeline(entries: [entry], policy: .after(nextUpdate)))
     }
     
-    private static func fetchDisplayState() -> DisplayState {
+    private static func fetchDisplayState(for date: Date) -> DisplayState {
         do {
-            let week = try TUKESchedule.calculateWeekNumber(for: Date())
+            let week = try TUKESchedule.calculateWeekNumber(for: date)
             return .week(week)
-        } catch let error as SemesterError {
-            return .error(error)
+        } catch let state as SemesterState {
+            return .specialCase(state)
         } catch {
-            return .error(.notInSemester(nextSemesterStart: Date()))
+            return .displayNone
         }
     }
 }
@@ -282,11 +406,11 @@ struct Widget_Previews: PreviewProvider {
     }
     
     private static let previewTimelines: [PreviewData] = [
-        PreviewData(displayName: "Summer break", timestamp: 1720569600),
-        PreviewData(displayName: "Winter semester - Week 6", timestamp: 1731196800),
-        PreviewData(displayName: "Winter break", timestamp: 1735325027),
-        PreviewData(displayName: "Winter exams", timestamp: 1735689600),
-        PreviewData(displayName: "Summer semester - Week 2", timestamp: 1740787200)
+        PreviewData(displayName: "Summer Break", timestamp: 1720569600),
+        PreviewData(displayName: "Winter Semester - Week 6", timestamp: 1731196800),
+        PreviewData(displayName: "Winter Break", timestamp: 1735325027),
+        PreviewData(displayName: "Exam Period", timestamp: 1735689600),
+        PreviewData(displayName: "Summer Semester - Week 14", timestamp: 1747267200)
     ]
     
     private static func generateEntry(from timestamp: Double) -> SimpleEntry {
@@ -296,8 +420,8 @@ struct Widget_Previews: PreviewProvider {
         do {
             let week = try TUKESchedule.calculateWeekNumber(for: date)
             displayState = .week(week)
-        } catch let error as SemesterError {
-            displayState = .error(error)
+        } catch let state as SemesterState {
+            displayState = .specialCase(state)
         } catch {
             displayState = .displayNone
         }
@@ -323,10 +447,5 @@ struct Widget_Previews: PreviewProvider {
             .previewContext(WidgetPreviewContext(family: .accessoryCircular))
             .previewDisplayName("Display None")
         }
-    }
-    
-    private static func heightForFontSize(size: CGFloat) -> CGFloat {
-        let font = UIFont.systemFont(ofSize: size)
-        return font.capHeight
     }
 }

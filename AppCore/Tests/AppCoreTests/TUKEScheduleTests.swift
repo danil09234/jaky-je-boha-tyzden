@@ -63,8 +63,8 @@ final class TUKEScheduleTests: XCTestCase {
             XCTAssertThrowsError(
                 try TUKESchedule.calculateSemesterStart(for: referenceDate),
                 "Should throw for \(testCase.description) (\(testCase.input))"
-            ) { err in
-                guard case .notInSemester(let nextStart) = err as? SemesterError else {
+            ) { error in
+                guard case .notInSemester(let nextStart) = error as? SemesterState else {
                     return XCTFail("Wrong error thrown for \(testCase.description) (\(testCase.input))")
                 }
                 XCTAssertTrue(nextStart > referenceDate, "Next semester start should be in the future for \(testCase.description) (\(testCase.input))")
@@ -101,19 +101,11 @@ final class TUKEScheduleTests: XCTestCase {
                 try TUKESchedule.calculateSemesterStart(for: ref),
                 "Should be winterBreakActive for \(testCase.description) (\(testCase.input))"
             ) { error in
-                guard case .winterBreakActive(let endOfBreak, let examPeriodStart) = error as? SemesterError else {
+                guard case .winterBreakActive(let endOfBreak, let examPeriodStart) = error as? SemesterState else {
                     return XCTFail("Wrong error thrown for winter break \(testCase.input)")
                 }
-                XCTAssertEqual(
-                    endOfBreak,
-                    expectedEnd,
-                    "Winter break end mismatch for \(testCase.description) (\(testCase.input))"
-                )
-                XCTAssertEqual(
-                    examPeriodStart,
-                    expectedExamStart,
-                    "Exam period start mismatch for \(testCase.description) (\(testCase.input))"
-                )
+                XCTAssertEqual(endOfBreak, expectedEnd, "Winter break end mismatch for \(testCase.description) (\(testCase.input))")
+                XCTAssertEqual(examPeriodStart, expectedExamStart, "Exam period start mismatch for \(testCase.description) (\(testCase.input))")
             }
         }
         
@@ -157,7 +149,7 @@ final class TUKEScheduleTests: XCTestCase {
             do {
                 _ = try TUKESchedule.calculateSemesterStart(for: ref)
                 XCTFail("Expected examPeriodActive for \(testCase.description) (\(testCase.input))")
-            } catch SemesterError.examPeriodActive(let endOfExams) {
+            } catch SemesterState.examPeriodActive(let endOfExams) {
                 let expectedEnd = isoStringToDate(testCase.endOfExams)
                 XCTAssertEqual(
                     endOfExams,
@@ -175,11 +167,11 @@ final class TUKEScheduleTests: XCTestCase {
             ("2025-02-10", "Day after 2025 exam period ends")
         ]
         
-        for safeDate in safeCases {
-            let ref = isoStringToDate(safeDate.input)
+        for safeCase in safeCases {
+            let ref = isoStringToDate(safeCase.input)
             XCTAssertNoThrow(
                 try TUKESchedule.calculateSemesterStart(for: ref),
-                "Should not be examPeriodActive for \(safeDate.description) (\(safeDate.input))"
+                "Should not be examPeriodActive for \(safeCase.description) (\(safeCase.input))"
             )
         }
     }
@@ -187,7 +179,7 @@ final class TUKEScheduleTests: XCTestCase {
     func testSummerBreak() {
         let ref = dateYMD(2023, 7, 15)
         XCTAssertThrowsError(try TUKESchedule.calculateSemesterStart(for: ref)) { error in
-            guard case .notInSemester(let nextStart) = error as? SemesterError else {
+            guard case .notInSemester(let nextStart) = error as? SemesterState else {
                 return XCTFail("Expected notInSemester, got \(error)")
             }
             XCTAssertTrue(nextStart > ref, "Next semester should be in the future")
@@ -197,7 +189,7 @@ final class TUKEScheduleTests: XCTestCase {
     func testEarlySeptember() {
         let ref = dateYMD(2023, 9, 10)
         XCTAssertThrowsError(try TUKESchedule.calculateSemesterStart(for: ref)) { error in
-            guard case .notInSemester(let nextStart) = error as? SemesterError else {
+            guard case .notInSemester(let nextStart) = error as? SemesterState else {
                 return XCTFail("Expected notInSemester, got \(error)")
             }
             XCTAssertEqual(nextStart, dateYMD(2023, 9, 25), "Next semester mismatch")
@@ -210,7 +202,7 @@ final class TUKEScheduleTests: XCTestCase {
             let result = try TUKESchedule.calculateSemesterStart(for: ref)
             XCTAssertEqual(result, dateYMD(2023, 2, 13), "Should be 2/13/2023 for summer start")
         } catch {
-            XCTFail("Expected normal semester, got error: \(error)")
+            XCTFail("Unexpected error for valid summer semester: \(error)")
         }
     }
 
@@ -220,7 +212,7 @@ final class TUKEScheduleTests: XCTestCase {
             let result = try TUKESchedule.calculateSemesterStart(for: ref)
             XCTAssertEqual(result, dateYMD(2023, 9, 25), "Should be 9/25/2023 for winter start")
         } catch {
-            XCTFail("Expected normal winter semester, got error: \(error)")
+            XCTFail("Unexpected error for valid winter semester: \(error)")
         }
     }
     
@@ -236,7 +228,7 @@ final class TUKEScheduleTests: XCTestCase {
     private func dateYMD(_ year: Int, _ month: Int, _ day: Int) -> Date {
         let dc = DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: year, month: month, day: day)
         guard let date = calendar.date(from: dc) else {
-            fatalError("Invalid date")
+            fatalError("Invalid date components: \(year)-\(month)-\(day)")
         }
         return date
     }

@@ -4,17 +4,16 @@ import AppCore
 import UIKit
 
 public class SemesterViewModel: SemesterViewModelBase {
-    public override func getDisplaySettings(for error: SemesterError) -> (display: String, size: CGFloat) {
-        switch error {
+    public override func getDisplaySettings(for state: SemesterState) -> (display: String, size: CGFloat) {
+        switch state {
         case .winterBreakActive(let endOfBreak, let examPeriodStart):
             let message = """
-            Veselé sviatky!\n\n
             Prestávka do \(Self.formatter.string(from: endOfBreak)).
             Skúšky od \(Self.formatter.string(from: examPeriodStart)).
             """
             return (message, 14.0)
         case .examPeriodActive(let endOfExams):
-            let message = "Veľa šťastia na skúškach!\nSkúšky sa končia \(Self.formatter.string(from: endOfExams))"
+            let message = "Skúšky sa končia \(Self.formatter.string(from: endOfExams))."
             return (message, 14.0)
         case .notInSemester(let nextSemesterStart):
             let message = "Vidíme sa \(Self.formatter.string(from: nextSemesterStart))!"

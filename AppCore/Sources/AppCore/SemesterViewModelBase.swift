@@ -37,15 +37,15 @@ open class SemesterViewModelBase: ObservableObject {
             let calculatedWeek = try TUKESchedule.calculateWeekNumber(for: now)
             let successDisplay = getSuccessDisplay(for: calculatedWeek)
             updateUI(display: successDisplay.display, size: successDisplay.size)
-        } catch let error as SemesterError {
-            handleSemesterError(error)
+        } catch let state as SemesterState {
+            handleSemesterState(state)
         } catch {
             updateUI(display: "Nepodarilo sa určiť semester.", size: 24.0)
         }
     }
     
-    private func handleSemesterError(_ error: SemesterError) {
-        let settings = getDisplaySettings(for: error)
+    private func handleSemesterState(_ state: SemesterState) {
+        let settings = getDisplaySettings(for: state)
         updateUI(display: settings.display, size: settings.size)
     }
     
@@ -56,16 +56,16 @@ open class SemesterViewModelBase: ObservableObject {
         }
     }
     
-    open func getDisplaySettings(for error: SemesterError) -> (display: String, size: CGFloat) {
-        switch error {
+    open func getDisplaySettings(for state: SemesterState) -> (display: String, size: CGFloat) {
+        switch state {
         case .winterBreakActive(let endOfBreak, let examPeriodStart):
             return (
-                "Veselé sviatky a veľa šťastia pri príprave na skúšky!\n\nPrestávka do \(Self.formatter.string(from: endOfBreak)).\nSkúšky sa začínajú \(Self.formatter.string(from: examPeriodStart)).",
+                "Prestávka do \(Self.formatter.string(from: endOfBreak)).\nSkúšky od \(Self.formatter.string(from: examPeriodStart)).",
                 24.0
             )
         case .examPeriodActive(let endOfExams):
             return (
-                "Veľa šťastia na skúškach!\nSkúšky sa končia \(Self.formatter.string(from: endOfExams))",
+                "Skúšky sa končia \(Self.formatter.string(from: endOfExams)).",
                 24.0
             )
         case .notInSemester(let nextSemesterStart):
@@ -77,6 +77,6 @@ open class SemesterViewModelBase: ObservableObject {
     }
     
     open func getSuccessDisplay(for week: Int) -> (display: String, size: CGFloat) {
-        return ("\(week)", 280.0)
+        return ("Týždeň \(week)", 280.0)
     }
 }

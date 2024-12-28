@@ -1,11 +1,5 @@
 import Foundation
 
-public enum SemesterError: Error, Hashable {
-    case winterBreakActive(endOfBreak: Date, examPeriodStart: Date)
-    case examPeriodActive(endOfExams: Date)
-    case notInSemester(nextSemesterStart: Date)
-}
-
 public class TUKESchedule {
     private static let calendar: Calendar = {
         var cal = Calendar.current
@@ -43,7 +37,7 @@ public class TUKESchedule {
         }
 
         if isOutOfSemester(referenceDate, year: year) {
-            throw SemesterError.notInSemester(nextSemesterStart: nextSemesterStart(after: referenceDate))
+            throw SemesterState.notInSemester(nextSemesterStart: nextSemesterStart(after: referenceDate))
         }
 
         if referenceDate >= summerSemesterStart && referenceDate < winterSemesterStart {
@@ -55,7 +49,7 @@ public class TUKESchedule {
         }
     }
     
-    private static func checkWinterBreak(for date: Date, year: Int) -> SemesterError? {
+    private static func checkWinterBreak(for date: Date, year: Int) -> SemesterState? {
         let winterSemesterStart = firstMonday(after: year, month: 9, day: 20)
         let winterBreakStart = calendar.date(byAdding: .weekOfYear, value: 13, to: winterSemesterStart)!
         let winterBreakEnd = dateYMD(year, 12, 31)
@@ -67,7 +61,7 @@ public class TUKESchedule {
         return nil
     }
     
-    private static func checkExamPeriod(for date: Date, year: Int) -> SemesterError? {
+    private static func checkExamPeriod(for date: Date, year: Int) -> SemesterState? {
         let examPeriodStart = dateYMD(year, 1, 1)
         let summerSemesterStart = firstMonday(after: year, month: 2, day: 10)
         let dayBeforeSummerStart = calendar.date(byAdding: .day, value: -1, to: summerSemesterStart)!
@@ -93,13 +87,13 @@ public class TUKESchedule {
     /// Calculates the current semester week number based on the provided date.
     /// - Parameter date: The reference date.
     /// - Returns: The calculated week number.
-    /// - Throws: `SemesterError` if the date is not within a semester.
+    /// - Throws: `SemesterState` if the date is not within a semester.
     public static func calculateWeekNumber(for date: Date) throws -> Int {
         let semesterStart = try calculateSemesterStart(for: date)
         let daysDifference = calendar.dateComponents([.day], from: semesterStart, to: date).day ?? 0
         let weekday = calendar.component(.weekday, from: date)
-        let weekOffset = [1, 6, 7].contains(weekday) ? 0 : 1 // Sunday=1, Saturday=7 in Calendar
-        let calculatedWeek = (daysDifference / 7) + weekOffset
-        return calculatedWeek
+        // Sunday = 1, Saturday = 7 in Calendar
+        let weekOffset = [1, 7].contains(weekday) ? 0 : 1
+        return (daysDifference / 7) + weekOffset
     }
 }

@@ -20,20 +20,6 @@
                ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FAB08DCA2D1CBE1400FA41D7"
-               BuildableName = "Mobile App.app"
-               BlueprintName = "Mobile App"
-               ReferencedContainer = "container:WhatWeek.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
