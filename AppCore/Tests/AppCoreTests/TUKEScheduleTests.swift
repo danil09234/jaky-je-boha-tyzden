@@ -232,4 +232,44 @@ final class TUKEScheduleTests: XCTestCase {
         }
         return date
     }
+    
+    func testKnownWeeksAndStartOfSemester2024() {
+        let testCases: [(input: String, expectedWeek: Int)] = [
+            ("2024-09-23", 1),
+            ("2024-09-24", 1),
+            ("2024-09-25", 1),
+            ("2024-09-26", 1),
+            ("2024-09-27", 1),
+            ("2024-09-28", 1),
+            ("2024-09-29", 1),
+            ("2024-09-30", 2),
+            ("2024-10-01", 2),
+            ("2024-10-02", 2),
+            ("2024-10-03", 2),
+            ("2024-10-04", 2),
+            ("2024-10-05", 2),
+            ("2024-10-06", 2),
+            ("2024-10-07", 3),
+            ("2024-10-08", 3),
+            ("2024-10-09", 3),
+            ("2024-10-10", 3),
+            ("2024-10-11", 3),
+            ("2024-10-12", 3),
+            ("2024-10-13", 3)
+        ]
+        
+        let expectedSemesterStart = dateYMD(2024, 9, 23)
+        
+        for testCase in testCases {
+            let referenceDate = isoStringToDate(testCase.input)
+            do {
+                let semesterStart = try TUKESchedule.calculateSemesterStart(for: referenceDate)
+                XCTAssertEqual(semesterStart, expectedSemesterStart, "Failed for date \(testCase.input)")
+                let week = calendar.component(.weekOfYear, from: referenceDate) - calendar.component(.weekOfYear, from: semesterStart) + 1
+                XCTAssertEqual(week, testCase.expectedWeek, "Week mismatch for date \(testCase.input)")
+            } catch {
+                XCTFail("Unexpected error for date \(testCase.input): \(error)")
+            }
+        }
+    }
 }
