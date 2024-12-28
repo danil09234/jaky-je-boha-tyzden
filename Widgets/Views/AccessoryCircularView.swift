@@ -16,19 +16,17 @@ struct AccessoryCircularView: View {
                         .bold()
                 }
             case .specialCase(let state):
-                VStack {
-#if os(watchOS)
+                ViewThatFits(in: .horizontal) {
+                    VStack {
+                        Image(systemName: state.iconName)
+                            .font(.headline)
+                            .foregroundColor(state.color)
+                        Text(state.shortDescription)
+                            .font(.caption)
+                    }
                     Image(systemName: state.iconName)
                         .font(.largeTitle)
                         .foregroundColor(state.color)
-#else
-                    Image(systemName: state.iconName)
-                        .font(.title2)
-                        .foregroundColor(state.color)
-                    Text(state.shortDescription)
-                        .font(.caption)
-                        .foregroundColor(state.color)
-#endif
                 }
             case .displayNone:
                 Text("-")

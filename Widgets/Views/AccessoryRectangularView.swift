@@ -7,19 +7,37 @@ struct AccessoryRectangularView: View {
         ContainerBackgroundWrapper {
             switch displayState {
             case .week(let week):
-                HStack {
-                    Image(systemName: "calendar")
-                        .font(.largeTitle)
-                    VStack {
-                        Text("TUKE")
-                            .foregroundColor(.red)
+                ViewThatFits {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .font(.largeTitle)
+                        VStack {
+                            Text("TUKE")
+                                .foregroundColor(.red)
+                                .bold()
+                            Text("Week")
+                                .foregroundColor(.gray)
+                        }
+                        Text("\(week)")
+                            .font(.title)
                             .bold()
-                        Text("Week")
-                            .foregroundColor(.gray)
                     }
-                    Text("\(week)")
-                        .font(.title)
-                        .bold()
+                    HStack(spacing: 5) {
+                        Image(systemName: "calendar")
+                            .font(.title)
+                        VStack {
+                            Text("TUKE")
+                                .font(.caption)
+                                .foregroundColor(.red)
+                                .bold()
+                            Text("Week")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
+                        Text("\(week)")
+                            .font(.title)
+                            .bold()
+                    }
                 }
             case .specialCase(let state):
                 HStack(spacing: 10) {
