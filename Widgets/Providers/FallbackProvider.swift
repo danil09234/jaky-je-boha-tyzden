@@ -20,14 +20,21 @@ struct FallbackProvider: TimelineProvider {
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let now = Date()
-        let result = FallbackProvider.fetchDisplayState(for: now)
-        let entry = SimpleEntry(
-            date: now,
-            displayState: result
-        )
-        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: now)!
-        completion(Timeline(entries: [entry], policy: .after(nextUpdate)))
+        let now = Calendar.current.startOfDay(for: Date())
+        var entries: [SimpleEntry] = []
+
+        for dayOffset in 0..<10 {
+            if let date = Calendar.current.date(byAdding: .day, value: dayOffset, to: now) {
+                let result = FallbackProvider.fetchDisplayState(for: date)
+                let entry = SimpleEntry(
+                    date: date,
+                    displayState: result
+                )
+                entries.append(entry)
+            }
+        }
+
+        completion(Timeline(entries: entries, policy: .atEnd))
     }
     
     private static func fetchDisplayState(for date: Date) -> DisplayState {

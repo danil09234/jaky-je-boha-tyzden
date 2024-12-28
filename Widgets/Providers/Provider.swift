@@ -3,6 +3,7 @@ import SwiftUI
 import AppCore
 import AppIntents
 
+@available(iOSApplicationExtension 17.0, *)
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(
@@ -20,14 +21,22 @@ struct Provider: AppIntentTimelineProvider {
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        let currentDate = Date()
-        let result = fetchDisplayState(for: currentDate)
-        let entry = SimpleEntry(
-            date: currentDate,
-            displayState: result
-        )
-        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
-        return Timeline(entries: [entry], policy: .after(nextUpdate))
+        var entries: [SimpleEntry] = []
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        for dayOffset in 0..<10 {
+            if let entryDate = calendar.date(byAdding: .day, value: dayOffset, to: today) {
+                let result = fetchDisplayState(for: entryDate)
+                let entry = SimpleEntry(
+                    date: entryDate,
+                    displayState: result
+                )
+                entries.append(entry)
+            }
+        }
+        
+        return Timeline(entries: entries, policy: .atEnd)
     }
 
     @available(iOSApplicationExtension 17.0, *)
