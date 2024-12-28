@@ -9,7 +9,7 @@ struct ContainerBackgroundWrapper<Content: View>: View {
     }
 
     var body: some View {
-        if #available(iOS 17.0, *) {
+        if #available(iOS 17.0, watchOSApplicationExtension 10.0, *) {
             content
                 .containerBackground(for: .widget) {}
         } else {

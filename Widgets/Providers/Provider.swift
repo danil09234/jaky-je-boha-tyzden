@@ -3,6 +3,7 @@ import SwiftUI
 import AppCore
 import AppIntents
 
+@available(watchOSApplicationExtension 10.0, *)
 @available(iOSApplicationExtension 17.0, *)
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {

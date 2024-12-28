@@ -24,7 +24,7 @@ struct WeekWidget: Widget {
         ]
 #endif
         
-        if #available(iOSApplicationExtension 17.0, *) {
+        if #available(iOS 17.0, watchOSApplicationExtension 10.0, *) {
             return AppIntentConfiguration(
                 kind: kind,
                 intent: ConfigurationAppIntent.self,

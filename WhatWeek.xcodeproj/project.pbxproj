@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA2393C82D205788004F5D53 /* Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FA26D2692D1CBA6400A29D3C /* Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA3122032D1E0C8300D620CA /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08E062D1DD5EC00FA41D7 /* Widget.swift */; };
 		FA3122062D1E0C8300D620CA /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = FA3122012D1E0C8300D620CA /* AppCore */; };
 		FA3122072D1E0C8300D620CA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB08DED2D1CCB2A00FA41D7 /* SwiftUI.framework */; };
@@ -61,6 +62,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FA2393C92D205788004F5D53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7ECA8E2D1B6F2800C23B32 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA26D2682D1CBA6400A29D3C;
+			remoteInfo = "Watch App";
+		};
 		FA3122112D1E0CAC00D620CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA7ECA8E2D1B6F2800C23B32 /* Project object */;
@@ -78,6 +86,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		FA2393CB2D205788004F5D53 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				FA2393C82D205788004F5D53 /* Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA3122132D1E0CAC00D620CA /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -370,12 +389,14 @@
 				FAB08DC82D1CBE1400FA41D7 /* Frameworks */,
 				FAB08DC92D1CBE1400FA41D7 /* Resources */,
 				FA3122132D1E0CAC00D620CA /* Embed Foundation Extensions */,
+				FA2393CB2D205788004F5D53 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				FAB08DDC2D1CBE2900FA41D7 /* PBXTargetDependency */,
 				FA3122122D1E0CAC00D620CA /* PBXTargetDependency */,
+				FA2393CA2D205788004F5D53 /* PBXTargetDependency */,
 			);
 			name = "Mobile App";
 			packageProductDependencies = (
@@ -552,6 +573,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FA2393CA2D205788004F5D53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA26D2682D1CBA6400A29D3C /* Watch App */;
+			targetProxy = FA2393C92D205788004F5D53 /* PBXContainerItemProxy */;
+		};
 		FA3122002D1E0C8300D620CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = FAB08E152D1DD88F00FA41D7 /* AppCore */;
@@ -930,7 +956,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -963,7 +989,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
