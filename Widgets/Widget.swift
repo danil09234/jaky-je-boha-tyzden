@@ -61,11 +61,6 @@ struct SimpleEntry: TimelineEntry {
     let displayState: DisplayState
 }
 
-private func heightForFontSize(size: CGFloat) -> CGFloat {
-    let font = UIFont.systemFont(ofSize: size)
-    return font.capHeight
-}
-
 extension SemesterState {
     var iconName: String {
         switch self {
@@ -112,7 +107,6 @@ extension SemesterState {
     }
 }
 
-
 struct WeekWidgetEntryView: View {
     var entry: SimpleEntry
     @Environment(\.widgetFamily) var family
@@ -120,169 +114,17 @@ struct WeekWidgetEntryView: View {
     var body: some View {
         switch family {
         case .accessoryCorner:
-            containerBackgroundIfAvailable {
-                switch entry.displayState {
-                case .week(let week):
-                    HStack(alignment: .center) {
-                        Image(systemName: "calendar")
-                            .font(.caption)
-                        Text("\(week)")
-                            .font(.title)
-                            .widgetAccentable()
-                            .bold()
-                    }
-                case .specialCase(let state):
-                    Image(systemName: state.iconName)
-                        .widgetAccentable()
-                        .bold()
-                        .font(.largeTitle)
-                case .displayNone:
-                    Text("-")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                }
-            }
-        
+            AccessoryCornerView(displayState: entry.displayState)
         case .accessoryCircular:
-            containerBackgroundIfAvailable {
-                switch entry.displayState {
-                case .week(let week):
-                    VStack {
-                        Image(systemName: "calendar")
-                            .font(.caption)
-                        Text("\(week)")
-                            .font(.largeTitle)
-                            .widgetAccentable()
-                            .bold()
-                    }
-                case .specialCase(let state):
-                    VStack {
-#if os(watchOS)
-                        Image(systemName: state.iconName)
-                            .font(.largeTitle)
-                            .foregroundColor(state.color)
-#else
-                        Image(systemName: state.iconName)
-                            .font(.title2)
-                            .foregroundColor(state.color)
-                        Text(state.shortDescription)
-                            .font(.caption)
-                            .foregroundColor(state.color)
-#endif
-                    }
-                case .displayNone:
-                    Text("-")
-                        .font(.title)
-                        .foregroundColor(.gray)
-                }
-            }
+            AccessoryCircularView(displayState: entry.displayState)
         case .accessoryInline:
-            containerBackgroundIfAvailable {
-                switch entry.displayState {
-                case .week(let week):
-                    HStack {
-                        Image(systemName: "calendar")
-                        Text("Week \(week)")
-                            .font(.headline)
-                            .widgetAccentable()
-                    }
-                case .specialCase(let state):
-                    HStack {
-                        Image(systemName: state.iconName)
-                        Text(state.shortDescription)
-                            .font(.headline)
-                            .widgetAccentable()
-                    }
-                case .displayNone:
-                    Text("-")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                }
-            }
+            AccessoryInlineView(displayState: entry.displayState)
         case .accessoryRectangular:
-            containerBackgroundIfAvailable {
-                switch entry.displayState {
-                case .week(let week):
-                    HStack {
-                        Image(systemName: "calendar")
-                            .font(.largeTitle)
-                        VStack {
-                            Text("TUKE")
-                                .foregroundColor(.red)
-                                .bold()
-                            Text("Week")
-                                .foregroundColor(.gray)
-                        }
-                        Text("\(week)")
-                            .font(.title)
-                            .bold()
-                    }
-                case .specialCase(let state):
-                    HStack(spacing: 10) {
-                        Image(systemName: state.iconName)
-                            .font(.title)
-                            .foregroundColor(state.color)
-                        Text(state.shortDescription)
-                            .font(.headline)
-                    }
-                case .displayNone:
-                    Text("-")
-                        .font(.title)
-                        .foregroundColor(.gray)
-                }
-            }
+            AccessoryRectangularView(displayState: entry.displayState)
         case .systemSmall:
-            containerBackgroundIfAvailable {
-                switch entry.displayState {
-                case .week(let week):
-                    VStack(spacing: 10) {
-                        HStack(spacing: 5) {
-                            Text("TUKE")
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
-                                .foregroundColor(.red)
-                            Text("Week")
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
-                                .foregroundColor(.gray)
-                        }
-                        Text("\(week)")
-                            .font(.system(size: 96, weight: .bold, design: .rounded))
-                            .frame(height: heightForFontSize(size: 96))
-                    }
-                case .specialCase(let state):
-                    VStack(spacing: 10) {
-                        Image(systemName: state.iconName)
-                            .font(.largeTitle)
-                            .foregroundColor(state.color)
-                        Text(state.detailedDescription)
-                            .font(.body)
-                            .multilineTextAlignment(.center)
-                    }
-                case .displayNone:
-                    VStack {
-                        Text("-")
-                            .font(.title)
-                            .foregroundColor(.gray)
-                    }
-                }
-            }
-        
+            SystemSmallView(displayState: entry.displayState)
         default:
-            containerBackgroundIfAvailable {
-                switch entry.displayState {
-                case .week(let week):
-                    Text("\(week)")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                case .specialCase(let state):
-                    Image(systemName: state.iconName)
-                        .foregroundColor(state.color)
-                        .font(.headline)
-                case .displayNone:
-                    Text("-")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                }
-            }
+            DefaultWidgetView(displayState: entry.displayState)
         }
     }
     
@@ -292,6 +134,268 @@ struct WeekWidgetEntryView: View {
     
     private func detailedErrorMessage(for state: SemesterState) -> String {
         return state.detailedDescription
+    }
+    
+    @ViewBuilder
+    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            content()
+                .containerBackground(for: .widget) { }
+        } else {
+            content()
+        }
+    }
+}
+
+struct AccessoryCornerView: View {
+    let displayState: DisplayState
+
+    var body: some View {
+        containerBackgroundIfAvailable {
+            switch displayState {
+            case .week(let week):
+                HStack(alignment: .center) {
+                    Image(systemName: "calendar")
+                        .font(.caption)
+                    Text("\(week)")
+                        .font(.title)
+                        .widgetAccentable()
+                        .bold()
+                }
+            case .specialCase(let state):
+                Image(systemName: state.iconName)
+                    .widgetAccentable()
+                    .bold()
+                    .font(.largeTitle)
+            case .displayNone:
+                Text("-")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            content()
+                .containerBackground(for: .widget) { }
+        } else {
+            content()
+        }
+    }
+}
+
+struct AccessoryCircularView: View {
+    let displayState: DisplayState
+
+    var body: some View {
+        containerBackgroundIfAvailable {
+            switch displayState {
+            case .week(let week):
+                VStack {
+                    Image(systemName: "calendar")
+                        .font(.caption)
+                    Text("\(week)")
+                        .font(.largeTitle)
+                        .widgetAccentable()
+                        .bold()
+                }
+            case .specialCase(let state):
+                VStack {
+#if os(watchOS)
+                    Image(systemName: state.iconName)
+                        .font(.largeTitle)
+                        .foregroundColor(state.color)
+#else
+                    Image(systemName: state.iconName)
+                        .font(.title2)
+                        .foregroundColor(state.color)
+                    Text(state.shortDescription)
+                        .font(.caption)
+                        .foregroundColor(state.color)
+#endif
+                }
+            case .displayNone:
+                Text("-")
+                    .font(.title)
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            content()
+                .containerBackground(for: .widget) { }
+        } else {
+            content()
+        }
+    }
+}
+
+struct AccessoryInlineView: View {
+    let displayState: DisplayState
+
+    var body: some View {
+        containerBackgroundIfAvailable {
+            switch displayState {
+            case .week(let week):
+                HStack {
+                    Image(systemName: "calendar")
+                    Text("Week \(week)")
+                        .font(.headline)
+                        .widgetAccentable()
+                }
+            case .specialCase(let state):
+                HStack {
+                    Image(systemName: state.iconName)
+                    Text(state.shortDescription)
+                        .font(.headline)
+                        .widgetAccentable()
+                }
+            case .displayNone:
+                Text("-")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            content()
+                .containerBackground(for: .widget) { }
+        } else {
+            content()
+        }
+    }
+}
+
+struct AccessoryRectangularView: View {
+    let displayState: DisplayState
+
+    var body: some View {
+        containerBackgroundIfAvailable {
+            switch displayState {
+            case .week(let week):
+                HStack {
+                    Image(systemName: "calendar")
+                        .font(.largeTitle)
+                    VStack {
+                        Text("TUKE")
+                            .foregroundColor(.red)
+                            .bold()
+                        Text("Week")
+                            .foregroundColor(.gray)
+                    }
+                    Text("\(week)")
+                        .font(.title)
+                        .bold()
+                }
+            case .specialCase(let state):
+                HStack(spacing: 10) {
+                    Image(systemName: state.iconName)
+                        .font(.title)
+                        .foregroundColor(state.color)
+                    Text(state.shortDescription)
+                        .font(.headline)
+                }
+            case .displayNone:
+                Text("-")
+                    .font(.title)
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            content()
+                .containerBackground(for: .widget) { }
+        } else {
+            content()
+        }
+    }
+}
+
+struct SystemSmallView: View {
+    let displayState: DisplayState
+
+    var body: some View {
+        containerBackgroundIfAvailable {
+            switch displayState {
+            case .week(let week):
+                VStack(spacing: 10) {
+                    HStack(spacing: 5) {
+                        Text("TUKE")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundColor(.red)
+                        Text("Week")
+                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                            .foregroundColor(.gray)
+                    }
+                    Text("\(week)")
+                        .font(.system(size: 96, weight: .bold, design: .rounded))
+                        .frame(height: heightForFontSize(size: 96))
+                }
+            case .specialCase(let state):
+                VStack(spacing: 10) {
+                    Image(systemName: state.iconName)
+                        .foregroundColor(state.color)
+                    Text(state.detailedDescription)
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                }
+            case .displayNone:
+                VStack {
+                    Text("-")
+                        .font(.title)
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+    }
+    
+    private func heightForFontSize(size: CGFloat) -> CGFloat {
+        let font = UIFont.systemFont(ofSize: size)
+        return font.capHeight
+    }
+    
+    @ViewBuilder
+    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            content()
+                .containerBackground(for: .widget) { }
+        } else {
+            content()
+        }
+    }
+}
+
+struct DefaultWidgetView: View {
+    let displayState: DisplayState
+
+    var body: some View {
+        containerBackgroundIfAvailable {
+            switch displayState {
+            case .week(let week):
+                Text("\(week)")
+                    .font(.headline)
+                    .foregroundColor(.white)
+            case .specialCase(let state):
+                Image(systemName: state.iconName)
+                    .foregroundColor(state.color)
+                    .font(.headline)
+            case .displayNone:
+                Text("-")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+            }
+        }
     }
     
     @ViewBuilder
