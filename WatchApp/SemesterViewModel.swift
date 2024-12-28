@@ -8,12 +8,16 @@ public class SemesterViewModel: SemesterViewModelBase {
         switch state {
         case .winterBreakActive(let endOfBreak, let examPeriodStart):
             let message = """
+            Veselé sviatky!\n
             Prestávka do \(Self.formatter.string(from: endOfBreak)).
             Skúšky od \(Self.formatter.string(from: examPeriodStart)).
             """
-            return (message, 14.0)
+            return (message, 13.0)
         case .examPeriodActive(let endOfExams):
-            let message = "Skúšky sa končia \(Self.formatter.string(from: endOfExams))."
+            let message = """
+            Veľa šťastia na skúškach!\n
+            Skúšky sa končia \(Self.formatter.string(from: endOfExams))
+            """
             return (message, 14.0)
         case .notInSemester(let nextSemesterStart):
             let message = "Vidíme sa \(Self.formatter.string(from: nextSemesterStart))!"
@@ -22,6 +26,6 @@ public class SemesterViewModel: SemesterViewModelBase {
     }
     
     public override func getSuccessDisplay(for week: Int) -> (display: String, size: CGFloat) {
-        return ("Týždeň \(week)", 180.0)
+        return ("\(week)", 150.0)
     }
 }

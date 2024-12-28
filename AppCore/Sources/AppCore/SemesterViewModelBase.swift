@@ -10,14 +10,19 @@ open class SemesterViewModelBase: ObservableObject {
     private lazy var contentUpdater: ContentUpdater = ContentUpdater(updateCallback: { [weak self] in
         self?.updateContent()
     })
-    
-    public static let formatter: DateFormatter = createDateFormatter()
-    
-    public init(referenceDate: Date = Date()) {
+
+    public init(referenceDate: Date) {
         self.referenceDate = referenceDate
+        updateContent()
+    }
+    
+    public init() {
+        self.referenceDate = Date()
         contentUpdater.scheduleDailyUpdate()
         updateContent()
     }
+    
+    public static let formatter: DateFormatter = createDateFormatter()
     
     deinit {
         contentUpdater.stopUpdating()
@@ -32,9 +37,8 @@ open class SemesterViewModelBase: ObservableObject {
     }
     
     private func updateContent() {
-        let now = Calendar.current.startOfDay(for: referenceDate)
         do {
-            let calculatedWeek = try TUKESchedule.calculateWeekNumber(for: now)
+            let calculatedWeek = try TUKESchedule.calculateWeekNumber(for: referenceDate)
             let successDisplay = getSuccessDisplay(for: calculatedWeek)
             updateUI(display: successDisplay.display, size: successDisplay.size)
         } catch let state as SemesterState {
@@ -60,12 +64,19 @@ open class SemesterViewModelBase: ObservableObject {
         switch state {
         case .winterBreakActive(let endOfBreak, let examPeriodStart):
             return (
-                "Prestávka do \(Self.formatter.string(from: endOfBreak)).\nSkúšky od \(Self.formatter.string(from: examPeriodStart)).",
+                """
+                Veselé sviatky!\n
+                Prestávka do \(Self.formatter.string(from: endOfBreak)).
+                Skúšky od \(Self.formatter.string(from: examPeriodStart)).
+                """,
                 24.0
             )
         case .examPeriodActive(let endOfExams):
             return (
-                "Skúšky sa končia \(Self.formatter.string(from: endOfExams)).",
+                """
+                Veľa šťastia na skúškach!\n
+                Skúšky sa končia \(Self.formatter.string(from: endOfExams)).
+                """,
                 24.0
             )
         case .notInSemester(let nextSemesterStart):
@@ -77,6 +88,6 @@ open class SemesterViewModelBase: ObservableObject {
     }
     
     open func getSuccessDisplay(for week: Int) -> (display: String, size: CGFloat) {
-        return ("Týždeň \(week)", 280.0)
+        return ("\(week)", 280.0)
     }
 }
