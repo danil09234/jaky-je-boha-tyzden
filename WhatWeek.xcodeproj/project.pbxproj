@@ -39,6 +39,9 @@
 		FA5B73952D1F7DA0006526F5 /* SystemSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5B73932D1F7DA0006526F5 /* SystemSmallView.swift */; };
 		FA5B73972D1F7DB2006526F5 /* DefaultWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5B73962D1F7DB2006526F5 /* DefaultWidgetView.swift */; };
 		FA5B73982D1F7DB2006526F5 /* DefaultWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5B73962D1F7DB2006526F5 /* DefaultWidgetView.swift */; };
+		FA848B4A2D1F84D3007340FA /* ContainerBackgroundWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA848B492D1F84D3007340FA /* ContainerBackgroundWrapper.swift */; };
+		FA848B4B2D1F8C40007340FA /* ContainerBackgroundWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA848B492D1F84D3007340FA /* ContainerBackgroundWrapper.swift */; };
+		FA848B4C2D1F8C48007340FA /* ContainerBackgroundWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA848B492D1F84D3007340FA /* ContainerBackgroundWrapper.swift */; };
 		FAB08DB92D1CBB1800FA41D7 /* SemesterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB08DB82D1CBB1800FA41D7 /* SemesterViewModel.swift */; };
 		FAB08DBD2D1CBB5D00FA41D7 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = FAB08DBC2D1CBB5D00FA41D7 /* AppCore */; };
 		FAB08DC32D1CBC4100FA41D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26D23B2D1CB9CD00A29D3C /* ContentView.swift */; };
@@ -120,6 +123,7 @@
 		FA5B73902D1F7D94006526F5 /* AccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryRectangularView.swift; sourceTree = "<group>"; };
 		FA5B73932D1F7DA0006526F5 /* SystemSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSmallView.swift; sourceTree = "<group>"; };
 		FA5B73962D1F7DB2006526F5 /* DefaultWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWidgetView.swift; sourceTree = "<group>"; };
+		FA848B492D1F84D3007340FA /* ContainerBackgroundWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerBackgroundWrapper.swift; sourceTree = "<group>"; };
 		FA87ADB72D1E3F7A00F4A097 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAA612572D1CB73D00CF3DB4 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		FAA612592D1CB73D00CF3DB4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 		FA5B73832D1F7D47006526F5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA848B492D1F84D3007340FA /* ContainerBackgroundWrapper.swift */,
 				FA5B73842D1F7D52006526F5 /* WeekWidgetEntryView.swift */,
 				FA5B73872D1F7D62006526F5 /* AccessoryCornerView.swift */,
 				FA5B738A2D1F7D73006526F5 /* AccessoryCircularView.swift */,
@@ -493,6 +498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA848B4C2D1F8C48007340FA /* ContainerBackgroundWrapper.swift in Sources */,
 				FA5B73922D1F7D94006526F5 /* AccessoryRectangularView.swift in Sources */,
 				FA3122032D1E0C8300D620CA /* Widget.swift in Sources */,
 				FA5B73862D1F7D52006526F5 /* WeekWidgetEntryView.swift in Sources */,
@@ -516,6 +522,7 @@
 			files = (
 				FAB08DDD2D1CBED600FA41D7 /* Main.swift in Sources */,
 				FAB08DE52D1CC46600FA41D7 /* SemesterViewModel.swift in Sources */,
+				FA848B4A2D1F84D3007340FA /* ContainerBackgroundWrapper.swift in Sources */,
 				FAB08DDE2D1CBED600FA41D7 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,6 +531,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA848B4B2D1F8C40007340FA /* ContainerBackgroundWrapper.swift in Sources */,
 				FA5B73912D1F7D94006526F5 /* AccessoryRectangularView.swift in Sources */,
 				FAB08E072D1DD5EC00FA41D7 /* Widget.swift in Sources */,
 				FA5B73852D1F7D52006526F5 /* WeekWidgetEntryView.swift in Sources */,

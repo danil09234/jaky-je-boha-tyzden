@@ -4,7 +4,7 @@ struct SystemSmallView: View {
     let displayState: DisplayState
 
     var body: some View {
-        containerBackgroundIfAvailable {
+        ContainerBackgroundWrapper {
             switch displayState {
             case .week(let week):
                 VStack(spacing: 10) {
@@ -42,15 +42,5 @@ struct SystemSmallView: View {
     private func heightForFontSize(size: CGFloat) -> CGFloat {
         let font = UIFont.systemFont(ofSize: size)
         return font.capHeight
-    }
-    
-    @ViewBuilder
-    private func containerBackgroundIfAvailable<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-        if #available(iOSApplicationExtension 17.0, *) {
-            content()
-                .containerBackground(for: .widget) {}
-        } else {
-            content()
-        }
     }
 }
