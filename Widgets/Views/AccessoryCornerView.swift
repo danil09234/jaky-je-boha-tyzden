@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 
 struct AccessoryCornerView: View {
     let displayState: DisplayState
@@ -28,3 +29,12 @@ struct AccessoryCornerView: View {
         }
     }
 }
+
+#if os(watchOS)
+struct CharacterNameView_Previews: PreviewProvider {
+    static var previews: some View {
+        AccessoryCornerView(displayState: .week(11))
+            .previewContext(WidgetPreviewContext(family: .accessoryCorner))
+    }
+}
+#endif
