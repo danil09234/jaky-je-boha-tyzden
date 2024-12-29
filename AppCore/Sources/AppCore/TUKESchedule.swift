@@ -50,9 +50,13 @@ public class TUKESchedule {
     }
     
     private static func checkWinterBreak(for date: Date, year: Int) -> SemesterState? {
+        if calendar.component(.day, from: date) == 1 && calendar.component(.month, from: date) == 1 {
+            let examPeriodStart = calendar.date(byAdding: .day, value: 1, to: date)!
+            return .winterBreakActive(endOfBreak: date, examPeriodStart: examPeriodStart)
+        }
         let winterSemesterStart = firstMonday(after: year, month: 9, day: 20)
         let winterBreakStart = calendar.date(byAdding: .weekOfYear, value: 13, to: winterSemesterStart)!
-        let winterBreakEnd = dateYMD(year, 12, 31)
+        let winterBreakEnd = dateYMD(year + 1, 1, 1)
         
         if date >= winterBreakStart && date <= winterBreakEnd {
             let examPeriodStart = calendar.date(byAdding: .day, value: 1, to: winterBreakEnd)!
@@ -62,7 +66,7 @@ public class TUKESchedule {
     }
     
     private static func checkExamPeriod(for date: Date, year: Int) -> SemesterState? {
-        let examPeriodStart = dateYMD(year, 1, 1)
+        let examPeriodStart = dateYMD(year, 1, 2)
         let summerSemesterStart = firstMonday(after: year, month: 2, day: 10)
         let dayBeforeSummerStart = calendar.date(byAdding: .day, value: -1, to: summerSemesterStart)!
         
