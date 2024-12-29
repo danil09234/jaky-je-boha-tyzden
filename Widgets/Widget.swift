@@ -32,7 +32,7 @@ struct WeekWidget: Widget {
             ) { entry in
                 WeekWidgetEntryView(entry: entry)
             }
-            .configurationDisplayName("TUKE Week Widget")
+            .configurationDisplayName("Week Widget")
             .description("Displays the current week or special information.")
             .supportedFamilies(families)
         } else {
@@ -42,7 +42,7 @@ struct WeekWidget: Widget {
             ) { entry in
                 WeekWidgetEntryView(entry: entry)
             }
-            .configurationDisplayName("TUKE Week Widget")
+            .configurationDisplayName("Week Widget")
             .description("Displays the current week or special information.")
             .supportedFamilies(families)
         }
