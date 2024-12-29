@@ -160,6 +160,7 @@
 		FAB08E062D1DD5EC00FA41D7 /* Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		FAB08E0A2D1DD5ED00FA41D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAB08E0C2D1DD5ED00FA41D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FACEACB62D20DF81001EB8B3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +269,7 @@
 		FA7ECA8D2D1B6F2800C23B32 = {
 			isa = PBXGroup;
 			children = (
+				FACEACB62D20DF81001EB8B3 /* README.md */,
 				FAB08DC42D1CBD7200FA41D7 /* Roboto-Bold.ttf */,
 				FA09D7342D1CA34D00DD110E /* AppCoreTests.xctestplan */,
 				FA09D7322D1C9B6B00DD110E /* AppCore */,
