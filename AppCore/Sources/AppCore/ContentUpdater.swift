@@ -1,17 +1,5 @@
 import Foundation
 
-public protocol Clock {
-    var currentDate: Date { get }
-}
-
-public class DefaultClock: Clock {
-    public var currentDate: Date {
-        return Date()
-    }
-    
-    public init() {}
-}
-
 public class ContentUpdater {
     private let clock: Clock
     private let updateCallback: () -> Void
