@@ -21,7 +21,7 @@ public class TUKESchedule {
         }
         
         if isDateOutOfSemester(referenceDate) {
-            throw SemesterState.notInSemester(nextSemesterStart: nextSemesterStart(for: referenceDate))
+            throw SemesterState.summerBreakActive(winterSemesterStart: winterSemesterStart(in: year(from: referenceDate)))
         }
         
         let year = year(from: referenceDate)
@@ -104,10 +104,6 @@ public class TUKESchedule {
     
     private static func winterSemesterStart(in year: Int) -> Date {
         firstMonday(after: year, month: 9, day: 20)
-    }
-    
-    public static func nextSemesterStart(for date: Date) -> Date {
-        winterSemesterStart(in: year(from: date))
     }
     
     public static func calculateWeekNumber(for date: Date) throws -> Int {

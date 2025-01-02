@@ -8,7 +8,7 @@ public extension SemesterState {
             return "snowflake"
         case .examPeriodActive:
             return "book.closed"
-        case .notInSemester:
+        case .summerBreakActive:
             return "sun.max"
         }
     }
@@ -19,7 +19,7 @@ public extension SemesterState {
             return .blue
         case .examPeriodActive:
             return .green
-        case .notInSemester:
+        case .summerBreakActive:
             return .orange
         }
     }
@@ -30,7 +30,7 @@ public extension SemesterState {
             return "Prestávka"
         case .examPeriodActive:
             return "Skúšky"
-        case .notInSemester:
+        case .summerBreakActive:
             return "Prestávka"
         }
     }
@@ -43,8 +43,8 @@ public extension SemesterState {
             return "Skúškové začína\n\(dateFormatter.string(from: examPeriodStart))"
         case .examPeriodActive(let endOfExams):
             return "Skúškové končí\n\(dateFormatter.string(from: endOfExams))"
-        case .notInSemester(let nextSemesterStart):
-            return "Vidíme sa\n\(dateFormatter.string(from: nextSemesterStart))!"
+        case .summerBreakActive(let winterSemesterStart):
+            return "Vidíme sa\n\(dateFormatter.string(from: winterSemesterStart))!"
         }
     }
 }

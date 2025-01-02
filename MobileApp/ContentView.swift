@@ -30,9 +30,9 @@ struct ContentView: View {
                     ExamPeriod(
                         endOfExams: dateFormatter.string(from: endOfExams)
                     )
-                case .notInSemester(let nextSemesterStart):
+                case .summerBreakActive(let winterSemesterStart):
                     SummerBreak(
-                        nextSemesterStart: dateFormatter.string(from: nextSemesterStart)
+                        winterSemesterStart: dateFormatter.string(from: winterSemesterStart)
                     )
                 case _:
                     DisplayNone()
