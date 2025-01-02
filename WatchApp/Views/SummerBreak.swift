@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SummerBreak: View {
-    var nextSemesterStart: String
+    var winterSemesterStart: String
     
     var body: some View {
         VStack(spacing: 20) {
@@ -9,7 +9,7 @@ struct SummerBreak: View {
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.yellow)
-            Text("Vidíme sa \(nextSemesterStart)!")
+            Text("Vidíme sa \(winterSemesterStart)!")
                 .multilineTextAlignment(.center)
                 .font(.custom("Roboto-Bold", size: 20))
                 .foregroundColor(.white)
@@ -19,6 +19,6 @@ struct SummerBreak: View {
 
 #Preview {
     MainContainer {
-        SummerBreak(nextSemesterStart: "23.09.2024")
+        SummerBreak(winterSemesterStart: "23.09.2024")
     }
 }

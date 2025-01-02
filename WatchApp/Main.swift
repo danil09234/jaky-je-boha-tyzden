@@ -1,10 +1,10 @@
 import SwiftUI
 
 @main
-struct WatchApp: App {
+struct MobileApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainPage()
         }
     }
 }

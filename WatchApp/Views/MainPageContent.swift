@@ -1,22 +1,14 @@
 import SwiftUI
 import AppCore
+import Foundation
 
-struct ContentView: View {
+struct MainPageContent: View {
     var dateFormatter: DateFormatter
-    
-    @ObservedObject public var viewModel: SemesterViewModel
-
-    init(
-        dateFormatter: DateFormatter = createDateFormatter(),
-        viewModel: SemesterViewModel = SemesterViewModel()
-    ) {
-        self.dateFormatter = dateFormatter
-        self.viewModel = viewModel
-    }
+    var displayState: DisplayState
 
     var body: some View {
         MainContainer {
-            switch viewModel.displayState {
+            switch displayState {
             case .week(let week):
                 Week(week: week)
             case .specialCase(let semesterState):
@@ -30,9 +22,9 @@ struct ContentView: View {
                     ExamPeriod(
                         endOfExams: dateFormatter.string(from: endOfExams)
                     )
-                case .summerBreakActive(let nextSemesterStart):
+                case .summerBreakActive(let winterSemesterStart):
                     SummerBreak(
-                        nextSemesterStart: dateFormatter.string(from: nextSemesterStart)
+                        winterSemesterStart: dateFormatter.string(from: winterSemesterStart)
                     )
                 case _:
                     DisplayNone()
@@ -40,7 +32,6 @@ struct ContentView: View {
             case .displayNone:
                 DisplayNone()
             }
-
         }
     }
 }
@@ -51,6 +42,8 @@ struct ContentView_Previews: PreviewProvider {
         let timestamp: Double
     }
     
+    private static let dateFormatter = createDateFormatter()
+    
     private static let previewTimelines: [PreviewData] = [
         PreviewData(displayName: "Summer Break", timestamp: 1720569600),
         PreviewData(displayName: "Winter Semester - Week 6", timestamp: 1731196800),
@@ -59,18 +52,17 @@ struct ContentView_Previews: PreviewProvider {
         PreviewData(displayName: "Summer Semester - Week 14", timestamp: 1747267200)
     ]
     
-    private static func generateViewModel(from timestamp: Double) -> SemesterViewModel {
-        return SemesterViewModel(referenceDate: Date(timeIntervalSince1970: timestamp))
-    }
-    
     static var previews: some View {
         Group {
             ForEach(previewTimelines, id: \.displayName) { preview in
-                ContentView(viewModel: generateViewModel(from: preview.timestamp))
-                    .previewDisplayName(preview.displayName)
+                MainPageContent(
+                    dateFormatter: ContentView_Previews.dateFormatter,
+                    displayState: fetchDisplayState(for: Date(timeIntervalSince1970: preview.timestamp))
+                )
+                .previewDisplayName(preview.displayName)
             }
             
-            ContentView(viewModel: SemesterViewModel())
+            MainPageContent(dateFormatter: ContentView_Previews.dateFormatter, displayState: fetchDisplayState(for: Date()))
                 .previewDisplayName("Default")
         }
     }

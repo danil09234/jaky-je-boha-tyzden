@@ -17,3 +17,16 @@ public func createDateFormatter() -> DateFormatter {
     formatter.dateFormat = "dd.MM.yyyy"
     return formatter
 }
+
+
+public func fetchDisplayState(for date: Date) -> DisplayState {
+    do {
+        let week = try TUKESchedule.calculateWeekNumber(for: date)
+        return .week(week)
+    } catch let state as SemesterState {
+        return .specialCase(state)
+    } catch {
+        return .displayNone
+    }
+}
+
