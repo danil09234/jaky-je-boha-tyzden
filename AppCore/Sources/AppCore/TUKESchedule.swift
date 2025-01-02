@@ -37,7 +37,7 @@ public class TUKESchedule {
         }
     }
     
-    private static func determineWinterBreak(for date: Date) -> SemesterState? { // +
+    private static func determineWinterBreak(for date: Date) -> SemesterState? {
         if isFirstDayOfYear(date) {
             let examStart = calendar.date(byAdding: .day, value: 1, to: date)!
             return .winterBreakActive(endOfBreak: date, examPeriodStart: examStart)
@@ -54,17 +54,17 @@ public class TUKESchedule {
         return nil
     }
     
-    private static func isFirstDayOfYear(_ date: Date) -> Bool { // +
+    private static func isFirstDayOfYear(_ date: Date) -> Bool {
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from: date)
         return (day == 1 && month == 1)
     }
     
-    private static func year(from date: Date) -> Int { // +
+    private static func year(from date: Date) -> Int {
         calendar.component(.year, from: date)
     }
     
-    private static func determineExamPeriod(for date: Date) -> SemesterState? { // +
+    private static func determineExamPeriod(for date: Date) -> SemesterState? {
         let y = year(from: date)
         let examStart = dateYMD(y, 1, 2)
         let summerStart = summerSemesterStart(in: y)
