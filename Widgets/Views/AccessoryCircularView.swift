@@ -1,4 +1,5 @@
 import SwiftUI
+import AppCore
 
 struct AccessoryCircularView: View {
     let displayState: DisplayState

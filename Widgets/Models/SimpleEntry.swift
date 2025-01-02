@@ -1,4 +1,5 @@
 import WidgetKit
+import AppCore
 
 struct SimpleEntry: TimelineEntry {
     let date: Date

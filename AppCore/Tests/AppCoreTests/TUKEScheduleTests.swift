@@ -216,15 +216,6 @@ final class TUKEScheduleTests: XCTestCase {
         }
     }
     
-    private func isoStringToDate(_ isoString: String) -> Date {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withFullDate]
-        guard let date = formatter.date(from: isoString) else {
-            fatalError("Invalid date string: \(isoString)")
-        }
-        return date
-    }
-    
     private func dateYMD(_ year: Int, _ month: Int, _ day: Int) -> Date {
         let dc = DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: year, month: month, day: day)
         guard let date = calendar.date(from: dc) else {

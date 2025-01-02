@@ -1,4 +1,5 @@
 import SwiftUI
+import AppCore
 
 struct AccessoryRectangularView: View {
     let displayState: DisplayState

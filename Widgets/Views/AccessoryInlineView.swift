@@ -1,4 +1,5 @@
 import SwiftUI
+import AppCore
 
 struct AccessoryInlineView: View {
     let displayState: DisplayState

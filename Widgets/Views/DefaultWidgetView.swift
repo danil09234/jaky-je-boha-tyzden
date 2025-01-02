@@ -1,4 +1,5 @@
 import SwiftUI
+import AppCore
 
 struct DefaultWidgetView: View {
     let displayState: DisplayState

@@ -2,22 +2,46 @@ import SwiftUI
 import AppCore
 
 struct ContentView: View {
-    @ObservedObject public var viewModel: SemesterViewModelBase
+    var dateFormatter: DateFormatter
+    
+    @ObservedObject public var viewModel: SemesterViewModel
 
-    init(viewModel: SemesterViewModelBase = SemesterViewModel()) {
+    init(
+        dateFormatter: DateFormatter = createDateFormatter(),
+        viewModel: SemesterViewModel = SemesterViewModel()
+    ) {
+        self.dateFormatter = dateFormatter
         self.viewModel = viewModel
     }
 
     var body: some View {
-        VStack {
-            Text(viewModel.displayText)
-                .font(.custom("Roboto-Bold", size: viewModel.textSize))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-                .padding()
+        MainContainer {
+            switch viewModel.displayState {
+            case .week(let week):
+                Week(week: week)
+            case .specialCase(let semesterState):
+                switch semesterState {
+                case .winterBreakActive(let endOfBreak, let examPeriodStart):
+                    WinterBreak(
+                        endOfBreak: dateFormatter.string(from: endOfBreak),
+                        examPeriodStart: dateFormatter.string(from: examPeriodStart)
+                    )
+                case .examPeriodActive(let endOfExams):
+                    ExamPeriod(
+                        endOfExams: dateFormatter.string(from: endOfExams)
+                    )
+                case .notInSemester(let nextSemesterStart):
+                    SummerBreak(
+                        nextSemesterStart: dateFormatter.string(from: nextSemesterStart)
+                    )
+                case _:
+                    DisplayNone()
+                }
+            case .displayNone:
+                DisplayNone()
+            }
+
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(hex: "#222"))
     }
 }
 
@@ -35,7 +59,7 @@ struct ContentView_Previews: PreviewProvider {
         PreviewData(displayName: "Summer Semester - Week 14", timestamp: 1747267200)
     ]
     
-    private static func generateViewModel(from timestamp: Double) -> SemesterViewModelBase {
+    private static func generateViewModel(from timestamp: Double) -> SemesterViewModel {
         return SemesterViewModel(referenceDate: Date(timeIntervalSince1970: timestamp))
     }
     

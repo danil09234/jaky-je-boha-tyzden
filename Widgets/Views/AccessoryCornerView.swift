@@ -1,5 +1,6 @@
 import SwiftUI
 import WidgetKit
+import AppCore
 
 struct AccessoryCornerView: View {
     let displayState: DisplayState

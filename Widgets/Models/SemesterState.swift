@@ -36,13 +36,15 @@ public extension SemesterState {
     }
     
     var detailedDescription: String {
+        let dateFormatter = createDateFormatter()
+        
         switch self {
         case .winterBreakActive(_, let examPeriodStart):
-            return "Skúškové začína\n\(SemesterViewModelBase.formatter.string(from: examPeriodStart))"
+            return "Skúškové začína\n\(dateFormatter.string(from: examPeriodStart))"
         case .examPeriodActive(let endOfExams):
-            return "Skúškové končí\n\(SemesterViewModelBase.formatter.string(from: endOfExams))"
+            return "Skúškové končí\n\(dateFormatter.string(from: endOfExams))"
         case .notInSemester(let nextSemesterStart):
-            return "Vidíme sa\n\(SemesterViewModelBase.formatter.string(from: nextSemesterStart))!"
+            return "Vidíme sa\n\(dateFormatter.string(from: nextSemesterStart))!"
         }
     }
 }
