@@ -127,21 +127,21 @@ final class TUKEScheduleTests: XCTestCase {
     func testExamPeriodWithTestCases() {
         let testCases: [(input: String, endOfExams: String, description: String)] = [
             // 2022 exam period
-            ("2022-01-02", "2022-02-13", "Start of 2022 exam period"),
-            ("2022-01-15", "2022-02-13", "Middle of 2022 exam period"),
-            ("2022-02-13", "2022-02-13", "Last day of 2022 exam period"),
+            ("2022-01-02", "2022-02-13", "Start of 2022 winter exam period"),
+            ("2022-01-15", "2022-02-13", "Middle of 2022 winter exam period"),
+            ("2022-02-13", "2022-02-13", "Last day of 2022 winter exam period"),
             // 2023 exam period
-            ("2023-01-02", "2023-02-12", "Start of 2023 exam period"),
-            ("2023-01-15", "2023-02-12", "Middle of 2023 exam period"),
-            ("2023-02-12", "2023-02-12", "Last day of 2023 exam period"),
+            ("2023-01-02", "2023-02-12", "Start of 2023 winter exam period"),
+            ("2023-01-15", "2023-02-12", "Middle of 2023 winter exam period"),
+            ("2023-02-12", "2023-02-12", "Last day of 2023 winter exam period"),
             // 2024 exam period
-            ("2024-01-02", "2024-02-11", "Start of 2024 exam period"),
-            ("2024-01-15", "2024-02-11", "Middle of 2024 exam period"),
-            ("2024-02-11", "2024-02-11", "Last day of 2024 exam period"),
+            ("2024-01-02", "2024-02-11", "Start of 2024 winter exam period"),
+            ("2024-01-15", "2024-02-11", "Middle of 2024 winter exam period"),
+            ("2024-02-11", "2024-02-11", "Last day of 2024 winter exam period"),
             // 2025 exam period
-            ("2025-01-02", "2025-02-09", "Start of 2025 exam period"),
-            ("2025-01-15", "2025-02-09", "Middle of 2025 exam period"),
-            ("2025-02-09", "2025-02-09", "Last day of 2025 exam period")
+            ("2025-01-02", "2025-02-09", "Start of 2025 winter exam period"),
+            ("2025-01-15", "2025-02-09", "Middle of 2025 winter exam period"),
+            ("2025-02-09", "2025-02-09", "Last day of 2025 winter exam period")
         ]
         
         for testCase in testCases {
@@ -162,9 +162,9 @@ final class TUKEScheduleTests: XCTestCase {
         }
         
         let safeCases: [(input: String, description: String)] = [
-            ("2023-02-13", "Day after 2023 exam period ends"),
-            ("2024-02-12", "Day after 2024 exam period ends"),
-            ("2025-02-10", "Day after 2025 exam period ends")
+            ("2023-02-13", "Day after 2023 winter exam period ends"),
+            ("2024-02-12", "Day after 2024 winter exam period ends"),
+            ("2025-02-10", "Day after 2025 winter exam period ends")
         ]
         
         for safeCase in safeCases {
