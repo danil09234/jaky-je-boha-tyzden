@@ -66,13 +66,22 @@ public class TUKESchedule {
     
     private static func determineExamPeriod(for date: Date) -> SemesterState? {
         let y = year(from: date)
-        let examStart = dateYMD(y, 1, 2)
-        let summerStart = summerSemesterStart(in: y)
-        let examEnd = calendar.date(byAdding: .day, value: -1, to: summerStart)!
         
-        if date >= examStart && date <= examEnd {
-            return .examPeriodActive(endOfExams: examEnd)
+        // Winter exam period: 01.02 until day before summer semester starts
+        let winterExamStart = dateYMD(y, 1, 2)
+        let summerStart = summerSemesterStart(in: y)
+        let winterExamEnd = calendar.date(byAdding: .day, value: -1, to: summerStart)!
+        if date >= winterExamStart && date <= winterExamEnd {
+            return .examPeriodActive(endOfExams: winterExamEnd)
         }
+        
+        // Summer exam period: ~13 weeks after summer start until June 1
+        let summerExamStart = calendar.date(byAdding: .weekOfYear, value: 13, to: summerStart)!
+        let summerExamEnd = dateYMD(y, 5, 31)
+        if date >= summerExamStart && date <= summerExamEnd {
+            return .examPeriodActive(endOfExams: summerExamEnd)
+        }
+        
         return nil
     }
     
