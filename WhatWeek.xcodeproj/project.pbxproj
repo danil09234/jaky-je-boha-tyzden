@@ -284,8 +284,8 @@
 		FA7ECA8D2D1B6F2800C23B32 = {
 			isa = PBXGroup;
 			children = (
+				FA90F5F92D27923700A374FA /* Resources */,
 				FACEACB62D20DF81001EB8B3 /* README.md */,
-				FAB08DC42D1CBD7200FA41D7 /* Roboto-Bold.ttf */,
 				FA09D7342D1CA34D00DD110E /* AppCoreTests.xctestplan */,
 				FA09D7322D1C9B6B00DD110E /* AppCore */,
 				FAA612562D1CB73D00CF3DB4 /* MobileApp */,
@@ -315,6 +315,14 @@
 				FAB08DED2D1CCB2A00FA41D7 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA90F5F92D27923700A374FA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FAB08DC42D1CBD7200FA41D7 /* Roboto-Bold.ttf */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		FAA612562D1CB73D00CF3DB4 /* MobileApp */ = {
