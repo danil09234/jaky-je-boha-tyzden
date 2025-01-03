@@ -50,7 +50,7 @@ final class TUKEScheduleTests: XCTestCase {
         }
     }
 
-    func testOutOfSemesterPeriods() {
+    func testSummerBreakPeriods() {
         let testCases: [(input: String, description: String)] = [
             ("2023-07-01", "Summer period"),
             ("2024-06-01", "Early June"),
@@ -72,7 +72,7 @@ final class TUKEScheduleTests: XCTestCase {
         }
     }
     
-    func testWinterBreakWithTestCases() {
+    func testWinterBreakPeriods() {
         let testCases: [(input: String, expectedEnd: String, expectedExamPeriodStart: String, description: String)] = [
             // 2021 break
             ("2021-12-20", "2022-01-01", "2022-01-02", "Start day of 2021 break"),
@@ -124,7 +124,7 @@ final class TUKEScheduleTests: XCTestCase {
         }
     }
 
-    func testExamPeriodWithTestCases() {
+    func testExamPeriods() {
         let testCases: [(input: String, endOfExams: String, description: String)] = [
             // 2022 winter exam period
             ("2022-01-02", "2022-02-13", "Start of 2022 winter exam period"),
@@ -196,7 +196,7 @@ final class TUKEScheduleTests: XCTestCase {
         let ref = dateYMD(2023, 7, 15)
         XCTAssertThrowsError(try TUKESchedule.calculateSemesterStart(for: ref)) { error in
             guard case .summerBreakActive(let winterSemesterStart) = error as? SemesterState else {
-                return XCTFail("Expected notInSemester, got \(error)")
+                return XCTFail("Expected summerBreakActive, got \(error)")
             }
             XCTAssertTrue(winterSemesterStart > ref, "Next semester should be in the future")
         }
@@ -206,7 +206,7 @@ final class TUKEScheduleTests: XCTestCase {
         let ref = dateYMD(2023, 9, 10)
         XCTAssertThrowsError(try TUKESchedule.calculateSemesterStart(for: ref)) { error in
             guard case .summerBreakActive(let winterSemesterStart) = error as? SemesterState else {
-                return XCTFail("Expected notInSemester, got \(error)")
+                return XCTFail("Expected summerBreakActive, got \(error)")
             }
             XCTAssertEqual(winterSemesterStart, dateYMD(2023, 9, 25), "Next semester mismatch")
         }
