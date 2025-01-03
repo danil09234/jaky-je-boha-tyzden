@@ -46,8 +46,9 @@ struct ContentView_Previews: PreviewProvider {
         PreviewData(displayName: "Summer Break", timestamp: 1720569600),
         PreviewData(displayName: "Winter Semester - Week 6", timestamp: 1731196800),
         PreviewData(displayName: "Winter Break", timestamp: 1735325027),
-        PreviewData(displayName: "Exam Period", timestamp: 1735776000),
-        PreviewData(displayName: "Summer Semester - Week 14", timestamp: 1747267200)
+        PreviewData(displayName: "Winter Exam Period", timestamp: 1735776000),
+        PreviewData(displayName: "Summer Semester - Week 13", timestamp: 1746662400),
+        PreviewData(displayName: "Summer Exam Period", timestamp: 1747267200)
     ]
     
     static var previews: some View {
