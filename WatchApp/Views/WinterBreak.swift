@@ -20,16 +20,13 @@ struct WinterBreak: View {
             )
             .multilineTextAlignment(.center)
             .font(.custom("Roboto-Bold", size: 13))
-            .foregroundColor(.white)
         }
     }
 }
 
 #Preview {
-    MainContainer {
-        WinterBreak(
-            endOfBreak: "01.01.2025",
-            examPeriodStart: "02.01.2025"
-        )
-    }
+    WinterBreak(
+        endOfBreak: "01.01.2025",
+        examPeriodStart: "02.01.2025"
+    )
 }

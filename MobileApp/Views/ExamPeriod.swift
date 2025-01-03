@@ -18,15 +18,12 @@ struct ExamPeriod: View {
             )
             .multilineTextAlignment(.center)
             .font(.custom("Roboto-Bold", size: 24))
-            .foregroundColor(.white)
         }
     }
 }
 
 #Preview {
-    MainContainer {
-        ExamPeriod(
-            endOfExams: "09.02.2025"
-        )
-    }
+    ExamPeriod(
+        endOfExams: "09.02.2025"
+    )
 }

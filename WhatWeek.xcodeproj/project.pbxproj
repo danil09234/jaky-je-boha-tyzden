@@ -58,7 +58,6 @@
 		FAB08E142D1DD88A00FA41D7 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = FAB08E132D1DD88A00FA41D7 /* AppCore */; };
 		FADCD7E72D2610830048F89E /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7E62D2610830048F89E /* Week.swift */; };
 		FADCD7EB2D2612130048F89E /* WinterBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7EA2D2612130048F89E /* WinterBreak.swift */; };
-		FADCD7ED2D26158C0048F89E /* MainContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7EC2D26158C0048F89E /* MainContainer.swift */; };
 		FADCD7EF2D2617BC0048F89E /* ExamPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7EE2D2617BC0048F89E /* ExamPeriod.swift */; };
 		FADCD7F12D261A600048F89E /* SummerBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7F02D261A600048F89E /* SummerBreak.swift */; };
 		FADCD7F32D2623040048F89E /* DisplayNone.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7F22D2623040048F89E /* DisplayNone.swift */; };
@@ -66,7 +65,6 @@
 		FADCD7FC2D2625730048F89E /* SummerBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7F62D2625730048F89E /* SummerBreak.swift */; };
 		FADCD7FD2D2625730048F89E /* ExamPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7F72D2625730048F89E /* ExamPeriod.swift */; };
 		FADCD7FE2D2625730048F89E /* DisplayNone.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7F82D2625730048F89E /* DisplayNone.swift */; };
-		FADCD7FF2D2625730048F89E /* MainContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7F92D2625730048F89E /* MainContainer.swift */; };
 		FADCD8002D2625730048F89E /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCD7FA2D2625730048F89E /* Week.swift */; };
 /* End PBXBuildFile section */
 
@@ -172,7 +170,6 @@
 		FACEACB62D20DF81001EB8B3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FADCD7E62D2610830048F89E /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		FADCD7EA2D2612130048F89E /* WinterBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinterBreak.swift; sourceTree = "<group>"; };
-		FADCD7EC2D26158C0048F89E /* MainContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainer.swift; sourceTree = "<group>"; };
 		FADCD7EE2D2617BC0048F89E /* ExamPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamPeriod.swift; sourceTree = "<group>"; };
 		FADCD7F02D261A600048F89E /* SummerBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummerBreak.swift; sourceTree = "<group>"; };
 		FADCD7F22D2623040048F89E /* DisplayNone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNone.swift; sourceTree = "<group>"; };
@@ -180,7 +177,6 @@
 		FADCD7F62D2625730048F89E /* SummerBreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummerBreak.swift; sourceTree = "<group>"; };
 		FADCD7F72D2625730048F89E /* ExamPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamPeriod.swift; sourceTree = "<group>"; };
 		FADCD7F82D2625730048F89E /* DisplayNone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayNone.swift; sourceTree = "<group>"; };
-		FADCD7F92D2625730048F89E /* MainContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainer.swift; sourceTree = "<group>"; };
 		FADCD7FA2D2625730048F89E /* Week.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -360,7 +356,6 @@
 			children = (
 				FADCD7E62D2610830048F89E /* Week.swift */,
 				FADCD7EA2D2612130048F89E /* WinterBreak.swift */,
-				FADCD7EC2D26158C0048F89E /* MainContainer.swift */,
 				FADCD7EE2D2617BC0048F89E /* ExamPeriod.swift */,
 				FADCD7F02D261A600048F89E /* SummerBreak.swift */,
 				FADCD7F22D2623040048F89E /* DisplayNone.swift */,
@@ -378,7 +373,6 @@
 				FADCD7F62D2625730048F89E /* SummerBreak.swift */,
 				FADCD7F72D2625730048F89E /* ExamPeriod.swift */,
 				FADCD7F82D2625730048F89E /* DisplayNone.swift */,
-				FADCD7F92D2625730048F89E /* MainContainer.swift */,
 				FADCD7FA2D2625730048F89E /* Week.swift */,
 				FA26D23B2D1CB9CD00A29D3C /* MainPageContent.swift */,
 			);
@@ -568,7 +562,6 @@
 				FADCD7FC2D2625730048F89E /* SummerBreak.swift in Sources */,
 				FADCD8002D2625730048F89E /* Week.swift in Sources */,
 				FADCD7FB2D2625730048F89E /* WinterBreak.swift in Sources */,
-				FADCD7FF2D2625730048F89E /* MainContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,7 +596,6 @@
 				FADCD7F32D2623040048F89E /* DisplayNone.swift in Sources */,
 				FAB08DDD2D1CBED600FA41D7 /* Main.swift in Sources */,
 				FAB08DDE2D1CBED600FA41D7 /* MainPageContent.swift in Sources */,
-				FADCD7ED2D26158C0048F89E /* MainContainer.swift in Sources */,
 				FADCD7EF2D2617BC0048F89E /* ExamPeriod.swift in Sources */,
 				FADCD7EB2D2612130048F89E /* WinterBreak.swift in Sources */,
 			);

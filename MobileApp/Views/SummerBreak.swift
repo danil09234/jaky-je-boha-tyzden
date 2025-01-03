@@ -12,13 +12,10 @@ struct SummerBreak: View {
             Text("Vidíme sa \(winterSemesterStart)!")
                 .multilineTextAlignment(.center)
                 .font(.custom("Roboto-Bold", size: 24))
-                .foregroundColor(.white)
         }
     }
 }
 
 #Preview {
-    MainContainer {
-        SummerBreak(winterSemesterStart: "23.09.2024")
-    }
+    SummerBreak(winterSemesterStart: "23.09.2024")
 }
