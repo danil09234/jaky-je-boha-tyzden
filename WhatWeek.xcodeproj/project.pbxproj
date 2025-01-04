@@ -42,6 +42,8 @@
 		FA5B73982D1F7DB2006526F5 /* DefaultWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5B73962D1F7DB2006526F5 /* DefaultWidgetView.swift */; };
 		FA848B4B2D1F8C40007340FA /* ContainerBackgroundWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA848B492D1F84D3007340FA /* ContainerBackgroundWrapper.swift */; };
 		FA848B4C2D1F8C48007340FA /* ContainerBackgroundWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA848B492D1F84D3007340FA /* ContainerBackgroundWrapper.swift */; };
+		FA90F5FA2D28BD5D00A374FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAA6125B2D1CB73E00CF3DB4 /* Assets.xcassets */; };
+		FA90F5FD2D28CF5B00A374FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA26D23D2D1CB9CE00A29D3C /* Assets.xcassets */; };
 		FAB08DBD2D1CBB5D00FA41D7 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = FAB08DBC2D1CBB5D00FA41D7 /* AppCore */; };
 		FAB08DC32D1CBC4100FA41D7 /* MainPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26D23B2D1CB9CD00A29D3C /* MainPageContent.swift */; };
 		FAB08DC62D1CBD7200FA41D7 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB08DC42D1CBD7200FA41D7 /* Roboto-Bold.ttf */; };
@@ -527,6 +529,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA90F5FD2D28CF5B00A374FA /* Assets.xcassets in Resources */,
 				FAB08DC62D1CBD7200FA41D7 /* Roboto-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,6 +546,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA90F5FA2D28BD5D00A374FA /* Assets.xcassets in Resources */,
 				FAB08DDF2D1CBEDC00FA41D7 /* Roboto-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
