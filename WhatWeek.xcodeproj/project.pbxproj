@@ -135,6 +135,8 @@
 		FA09D7342D1CA34D00DD110E /* AppCoreTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = AppCoreTests.xctestplan; path = AppCore/AppCoreTests.xctestplan; sourceTree = "<group>"; };
 		FA0C99DA2D275A2700918719 /* MainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPage.swift; sourceTree = "<group>"; };
 		FA0C99DC2D275D9E00918719 /* MainPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPage.swift; sourceTree = "<group>"; };
+		FA0E2F0B2D2C9A66004E2DED /* privacy-policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "privacy-policy.md"; sourceTree = "<group>"; };
+		FA0E2F0C2D2C9E69004E2DED /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		FA2393DD2D208F5F004F5D53 /* Widgets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Widgets; sourceTree = "<group>"; };
 		FA26D23B2D1CB9CD00A29D3C /* MainPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageContent.swift; sourceTree = "<group>"; };
 		FA26D23D2D1CB9CE00A29D3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -222,13 +224,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FA0E2F0A2D2C698E004E2DED /* Screenshots */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Screenshots;
-			sourceTree = "<group>";
-		};
 		FA26D2382D1CB9CD00A29D3C /* WatchApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,7 +288,8 @@
 		FA7ECA8D2D1B6F2800C23B32 = {
 			isa = PBXGroup;
 			children = (
-				FA0E2F0A2D2C698E004E2DED /* Screenshots */,
+				FA0E2F0C2D2C9E69004E2DED /* LICENSE.md */,
+				FA0E2F0B2D2C9A66004E2DED /* privacy-policy.md */,
 				FA90F5F92D27923700A374FA /* Resources */,
 				FACEACB62D20DF81001EB8B3 /* README.md */,
 				FA09D7342D1CA34D00DD110E /* AppCoreTests.xctestplan */,
