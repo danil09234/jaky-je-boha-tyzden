@@ -30,8 +30,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FAB08DCA2D1CBE1400FA41D7"
-               BuildableName = "Mobile App.app"
-               BlueprintName = "Mobile App"
+               BuildableName = "Jaky je boha tyzden.app"
+               BlueprintName = "Jaky je boha tyzden"
                ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

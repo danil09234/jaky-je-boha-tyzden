@@ -30,8 +30,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA26D2682D1CBA6400A29D3C"
-               BuildableName = "Watch App.app"
-               BlueprintName = "Watch App"
+               BuildableName = "Jaky je boha tyzden for watch.app"
+               BlueprintName = "Jaky je boha tyzden for watch"
                ReferencedContainer = "container:WhatWeek.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -70,8 +70,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA26D2682D1CBA6400A29D3C"
-            BuildableName = "Watch App.app"
-            BlueprintName = "Watch App"
+            BuildableName = "Jaky je boha tyzden for watch.app"
+            BlueprintName = "Jaky je boha tyzden for watch"
             ReferencedContainer = "container:WhatWeek.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
