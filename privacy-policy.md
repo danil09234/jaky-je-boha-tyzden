@@ -26,7 +26,7 @@ Since the app does not collect or store any data, there is no personal informati
 
 This Privacy Policy is effective as of the date provided below and will remain in effect unless updated. If any changes are made to this Privacy Policy, the updated version will be included in the app's information section.
 
-Effective Date: [Insert Date]
+Effective Date: 09.01.2025
 
 ## Contact Information
 
