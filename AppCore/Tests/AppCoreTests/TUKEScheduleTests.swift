@@ -272,7 +272,7 @@ final class TUKEScheduleTests: XCTestCase {
             do {
                 let semesterStart = try TUKESchedule.calculateSemesterStart(for: referenceDate)
                 XCTAssertEqual(semesterStart, expectedSemesterStart, "Failed for date \(testCase.input)")
-                let week = calendar.component(.weekOfYear, from: referenceDate) - calendar.component(.weekOfYear, from: semesterStart) + 1
+                let week = try TUKESchedule.calculateWeekNumber(for: referenceDate)
                 XCTAssertEqual(week, testCase.expectedWeek, "Week mismatch for date \(testCase.input)")
             } catch {
                 XCTFail("Unexpected error for date \(testCase.input): \(error)")
