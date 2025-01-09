@@ -118,8 +118,6 @@ public class TUKESchedule {
     public static func calculateWeekNumber(for date: Date) throws -> Int {
         let semesterStart = try calculateSemesterStart(for: date)
         let daysDifference = calendar.dateComponents([.day], from: semesterStart, to: date).day ?? 0
-        let weekday = calendar.component(.weekday, from: date)
-        let weekOffset = [1, 7].contains(weekday) ? 0 : 1
-        return (daysDifference / 7) + weekOffset
+        return (daysDifference / 7) + 1
     }
 }
