@@ -26,7 +26,7 @@ struct Provider: AppIntentTimelineProvider {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         
-        for dayOffset in 1..<10 {
+        for dayOffset in 0..<10 {
             if let entryDate = calendar.date(byAdding: .day, value: dayOffset, to: today) {
                 let result = fetchDisplayState(for: entryDate)
                 let entry = SimpleEntry(
