@@ -12,25 +12,26 @@ public class TUKESchedule {
     }()
     
     public static func calculateSemesterStart(for referenceDate: Date) throws -> Date {
-        if let winterBreak = determineWinterBreak(for: referenceDate) {
+        let startOfReferenceDate = calendar.startOfDay(for: referenceDate)
+        if let winterBreak = determineWinterBreak(for: startOfReferenceDate) {
             throw winterBreak
         }
         
-        if let examPeriod = determineExamPeriod(for: referenceDate) {
+        if let examPeriod = determineExamPeriod(for: startOfReferenceDate) {
             throw examPeriod
         }
         
-        if isDateOutOfSemester(referenceDate) {
-            throw SemesterState.summerBreakActive(winterSemesterStart: winterSemesterStart(in: year(from: referenceDate)))
+        if isDateOutOfSemester(startOfReferenceDate) {
+            throw SemesterState.summerBreakActive(winterSemesterStart: winterSemesterStart(in: year(from: startOfReferenceDate)))
         }
         
-        let year = year(from: referenceDate)
+        let year = year(from: startOfReferenceDate)
         let winterStart = winterSemesterStart(in: year)
         let summerStart = summerSemesterStart(in: year)
         
-        if referenceDate >= summerStart && referenceDate < winterStart {
+        if startOfReferenceDate >= summerStart && startOfReferenceDate < winterStart {
             return summerStart
-        } else if referenceDate >= winterStart {
+        } else if startOfReferenceDate >= winterStart {
             return winterStart
         } else {
             return winterSemesterStart(in: year - 1)
