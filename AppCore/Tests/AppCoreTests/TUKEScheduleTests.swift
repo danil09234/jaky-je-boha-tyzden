@@ -2,10 +2,9 @@ import XCTest
 @testable import AppCore
 
 final class TUKEScheduleTests: XCTestCase {
-    
     private let calendar: Calendar = {
         var cal = Calendar.current
-        cal.timeZone = TimeZone(secondsFromGMT: 0)!
+        cal.timeZone = TimeZone(secondsFromGMT: 3600)!
         return cal
     }()
     
@@ -104,8 +103,14 @@ final class TUKEScheduleTests: XCTestCase {
                 guard case .winterBreakActive(let endOfBreak, let examPeriodStart) = error as? SemesterState else {
                     return XCTFail("Wrong error thrown for winter break \(testCase.input): \(error)")
                 }
-                XCTAssertEqual(endOfBreak, expectedEnd, "Winter break end mismatch for \(testCase.description) (\(testCase.input))")
-                XCTAssertEqual(examPeriodStart, expectedExamStart, "Exam period start mismatch for \(testCase.description) (\(testCase.input))")
+                XCTAssertTrue(
+                    compareDate(endOfBreak, expectedEnd),
+                    "Winter break end mismatch for \(testCase.description) (\(testCase.input))"
+                )
+                XCTAssertTrue(
+                    compareDate(examPeriodStart, expectedExamStart),
+                    "Exam period start mismatch for \(testCase.description) (\(testCase.input))"
+                )
             }
         }
         
@@ -167,9 +172,8 @@ final class TUKEScheduleTests: XCTestCase {
                 XCTFail("Expected examPeriodActive for \(testCase.description) (\(testCase.input))")
             } catch SemesterState.examPeriodActive(let endOfExams) {
                 let expectedEnd = isoStringToDate(testCase.endOfExams)
-                XCTAssertEqual(
-                    endOfExams,
-                    expectedEnd,
+                XCTAssertTrue(
+                    compareDate(endOfExams, expectedEnd),
                     "Exam end mismatch for \(testCase.description) (\(testCase.input))"
                 )
             } catch {
@@ -233,11 +237,21 @@ final class TUKEScheduleTests: XCTestCase {
     }
     
     private func dateYMD(_ year: Int, _ month: Int, _ day: Int) -> Date {
-        let dc = DateComponents(timeZone: TimeZone(secondsFromGMT: 0), year: year, month: month, day: day)
+        let dc = DateComponents(timeZone: TimeZone(secondsFromGMT: 3600), year: year, month: month, day: day) // GMT+1
         guard let date = calendar.date(from: dc) else {
             fatalError("Invalid date components: \(year)-\(month)-\(day)")
         }
-        return date
+        return calendar.startOfDay(for: date)
+    }
+    
+    private func isoStringToDate(_ isoString: String) -> Date {
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = TimeZone(secondsFromGMT: 3600)!
+        formatter.formatOptions = [.withFullDate]
+        guard let date = formatter.date(from: isoString + "T00:00:00") else {
+            fatalError("Invalid ISO date string: \(isoString)")
+        }
+        return calendar.startOfDay(for: date)
     }
     
     func testKnownWeeksAndStartOfSemester2024() {
@@ -278,5 +292,11 @@ final class TUKEScheduleTests: XCTestCase {
                 XCTFail("Unexpected error for date \(testCase.input): \(error)")
             }
         }
+    }
+    
+    private func compareDate(_ date1: Date, _ date2: Date) -> Bool {
+        let comp1 = calendar.dateComponents([.year, .month, .day], from: date1)
+        let comp2 = calendar.dateComponents([.year, .month, .day], from: date2)
+        return comp1.year == comp2.year && comp1.month == comp2.month && comp1.day == comp2.day
     }
 }

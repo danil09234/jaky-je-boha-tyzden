@@ -6,6 +6,12 @@ import AppIntents
 @available(watchOSApplicationExtension 10.0, *)
 @available(iOSApplicationExtension 17.0, *)
 struct Provider: AppIntentTimelineProvider {
+    private static let calendar: Calendar = {
+        var cal = Calendar.current
+        cal.timeZone = TimeZone(secondsFromGMT: 3600)!
+        return cal
+    }()
+    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(
             date: Date(),
@@ -23,11 +29,10 @@ struct Provider: AppIntentTimelineProvider {
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
         var entries: [SimpleEntry] = []
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
+        let today = Provider.calendar.startOfDay(for: Date())
         
         for dayOffset in 0..<10 {
-            if let entryDate = calendar.date(byAdding: .day, value: dayOffset, to: today) {
+            if let entryDate = Provider.calendar.date(byAdding: .day, value: dayOffset, to: today) {
                 let result = fetchDisplayState(for: entryDate)
                 let entry = SimpleEntry(
                     date: entryDate,
@@ -37,7 +42,8 @@ struct Provider: AppIntentTimelineProvider {
             }
         }
         
-        return Timeline(entries: entries, policy: .atEnd)
+        let nextMidnight = Provider.calendar.date(byAdding: .day, value: 1, to: today)!
+        return Timeline(entries: entries, policy: .after(nextMidnight))
     }
 
     @available(iOSApplicationExtension 17.0, *)

@@ -2,36 +2,42 @@ import Foundation
 
 public class TUKESchedule {
     public static func dateYMD(_ year: Int, _ month: Int, _ day: Int) -> Date {
-        calendar.date(from: DateComponents(year: year, month: month, day: day))!
+        let dc = DateComponents(timeZone: calendar.timeZone, year: year, month: month, day: day, hour: 0, minute: 0, second: 0)
+        return calendar.date(from: dc)!
     }
     
     private static let calendar: Calendar = {
         var cal = Calendar.current
-        cal.timeZone = TimeZone(secondsFromGMT: 0)!
+        cal.timeZone = TimeZone(secondsFromGMT: 3600)!
         return cal
     }()
     
     public static func calculateSemesterStart(for referenceDate: Date) throws -> Date {
-        let startOfReferenceDate = calendar.startOfDay(for: referenceDate)
-        if let winterBreak = determineWinterBreak(for: startOfReferenceDate) {
+        let startOfReferenceDay = dateYMD(
+            calendar.component(.year, from: referenceDate),
+            calendar.component(.month, from: referenceDate),
+            calendar.component(.day, from: referenceDate)
+        )
+        
+        if let winterBreak = determineWinterBreak(for: startOfReferenceDay) {
             throw winterBreak
         }
         
-        if let examPeriod = determineExamPeriod(for: startOfReferenceDate) {
+        if let examPeriod = determineExamPeriod(for: startOfReferenceDay) {
             throw examPeriod
         }
         
-        if isDateOutOfSemester(startOfReferenceDate) {
-            throw SemesterState.summerBreakActive(winterSemesterStart: winterSemesterStart(in: year(from: startOfReferenceDate)))
+        if isDateOutOfSemester(startOfReferenceDay) {
+            throw SemesterState.summerBreakActive(winterSemesterStart: winterSemesterStart(in: year(from: startOfReferenceDay)))
         }
         
-        let year = year(from: startOfReferenceDate)
+        let year = year(from: startOfReferenceDay)
         let winterStart = winterSemesterStart(in: year)
         let summerStart = summerSemesterStart(in: year)
         
-        if startOfReferenceDate >= summerStart && startOfReferenceDate < winterStart {
+        if startOfReferenceDay >= summerStart && startOfReferenceDay < winterStart {
             return summerStart
-        } else if startOfReferenceDate >= winterStart {
+        } else if startOfReferenceDay >= winterStart {
             return winterStart
         } else {
             return winterSemesterStart(in: year - 1)
@@ -56,9 +62,8 @@ public class TUKESchedule {
     }
     
     private static func isFirstDayOfYear(_ date: Date) -> Bool {
-        let day = calendar.component(.day, from: date)
-        let month = calendar.component(.month, from: date)
-        return (day == 1 && month == 1)
+        let components = calendar.dateComponents([.day, .month], from: date)
+        return components.day == 1 && components.month == 1
     }
     
     private static func year(from date: Date) -> Int {

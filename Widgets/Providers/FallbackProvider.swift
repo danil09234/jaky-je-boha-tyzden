@@ -2,6 +2,12 @@ import WidgetKit
 import AppCore
 
 struct FallbackProvider: TimelineProvider {
+    private static let calendar: Calendar = {
+        var cal = Calendar.current
+        cal.timeZone = TimeZone(secondsFromGMT: 3600)!
+        return cal
+    }()
+    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(
             date: Date(),
@@ -20,21 +26,22 @@ struct FallbackProvider: TimelineProvider {
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
-        let now = Calendar.current.startOfDay(for: Date())
+        let today = FallbackProvider.calendar.startOfDay(for: Date())
         var entries: [SimpleEntry] = []
 
         for dayOffset in 0..<10 {
-            if let date = Calendar.current.date(byAdding: .day, value: dayOffset, to: now) {
-                let result = FallbackProvider.fetchDisplayState(for: date)
+            if let entryDate = FallbackProvider.calendar.date(byAdding: .day, value: dayOffset, to: today) {
+                let result = FallbackProvider.fetchDisplayState(for: entryDate)
                 let entry = SimpleEntry(
-                    date: date,
+                    date: entryDate,
                     displayState: result
                 )
                 entries.append(entry)
             }
         }
-
-        completion(Timeline(entries: entries, policy: .atEnd))
+        
+        let nextMidnight = FallbackProvider.calendar.date(byAdding: .day, value: 1, to: today)!
+        completion(Timeline(entries: entries, policy: .after(nextMidnight)))
     }
     
     private static func fetchDisplayState(for date: Date) -> DisplayState {
