@@ -57,7 +57,7 @@ struct Widget_Previews: PreviewProvider {
     
     private static let previewTimelines: [PreviewData] = [
         PreviewData(displayName: "Summer Break", timestamp: 1720569600),
-        PreviewData(displayName: "Winter Semester - Week 6", timestamp: 1731196800),
+        PreviewData(displayName: "Winter Semester - Week 6", timestamp: 1730592000),
         PreviewData(displayName: "Winter Break", timestamp: 1735325027),
         PreviewData(displayName: "Winter Exam Period", timestamp: 1735776000),
         PreviewData(displayName: "Summer Semester - Week 13", timestamp: 1746662400),
